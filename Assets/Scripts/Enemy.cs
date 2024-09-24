@@ -1,7 +1,11 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.Splines;
 
+[Serializable]
 public class Enemy : MonoBehaviour
 {
     private static SplineContainer _path;
