@@ -898,6 +898,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy_prefab: {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+  rounds:
+  - waves:
+    - enemies:
+      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      timeBetweenEnemies: 1
+    - enemies:
+      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      timeBetweenEnemies: 1.5
+    timeBetweenWaves:
+    - 2
+  - waves:
+    - enemies:
+      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      timeBetweenEnemies: 1.5
+    timeBetweenWaves: []
+  timeBetweenRounds: 3
+  currentRound: 0
 --- !u!4 &901308301
 Transform:
   m_ObjectHideFlags: 0
