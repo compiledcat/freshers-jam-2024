@@ -31,9 +31,9 @@ public class Enemy : MonoBehaviour
         if (splineProgress >= 1f)
         {
             GameManager.Instance.HitBase();
-            enabled = false;
-
             Tween.Scale(transform, 0f, 0.5f, Ease.InBack).OnComplete(() => Destroy(gameObject));
+
+            enabled = false;
         }
     }
 }

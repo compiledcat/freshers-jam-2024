@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
     }
-
+    
     private void Update()
     {
 #if UNITY_EDITOR
