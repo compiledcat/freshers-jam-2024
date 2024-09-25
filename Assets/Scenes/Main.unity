@@ -666,12 +666,12 @@ MonoBehaviour:
     - enemies:
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
-      timeBetweenEnemies: 1
+      timeBetweenEnemies: 0.5
     - enemies:
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
-      timeBetweenEnemies: 1.5
+      timeBetweenEnemies: 1
     timeBetweenWaves:
     - 2
   - waves:
@@ -679,7 +679,7 @@ MonoBehaviour:
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
-      timeBetweenEnemies: 1.5
+      timeBetweenEnemies: 1
     timeBetweenWaves: []
   timeBetweenRounds: 3
   currentRound: 0
@@ -1737,6 +1737,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 137287865}
     m_Modifications:
+    - target: {fileID: 71306740207776744, guid: 11f20346c5e1710448c4b3cd15b9bb13, type: 3}
+      propertyPath: m_Size.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 71306740207776744, guid: 11f20346c5e1710448c4b3cd15b9bb13, type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 71306740207776744, guid: 11f20346c5e1710448c4b3cd15b9bb13, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a5bf831aed072e74fa03e518bce88410, type: 3}
+    - target: {fileID: 71306740207776744, guid: 11f20346c5e1710448c4b3cd15b9bb13, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2814499165001072042, guid: 11f20346c5e1710448c4b3cd15b9bb13, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1777,6 +1793,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7429997404016819937, guid: 11f20346c5e1710448c4b3cd15b9bb13, type: 3}
+      propertyPath: yesMouth
+      value: 
+      objectReference: {fileID: 21300000, guid: a5bf831aed072e74fa03e518bce88410, type: 3}
     - target: {fileID: 7442236672153247650, guid: 11f20346c5e1710448c4b3cd15b9bb13, type: 3}
       propertyPath: m_Name
       value: Frog

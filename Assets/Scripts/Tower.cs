@@ -16,6 +16,9 @@ public enum ShootingPriority
 
 public class Tower : MonoBehaviour
 {
+    public Sprite noMouth;
+    public Sprite yesMouth;
+
     public ShootingPriority shootingPriority;
     public float shootingRange; //Radius of circle that tower can shoot enemies within
 
@@ -29,6 +32,7 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
+        GetComponent<SpriteRenderer>().sprite = yesMouth;
         timeUntilNextShot = 0;
     }
 
@@ -69,6 +73,7 @@ public class Tower : MonoBehaviour
             }
             if (timeUntilNextShot <= 0) {
                 timeUntilNextShot = GetCooldownTime();
+                GetComponent<SpriteRenderer>().sprite = noMouth;
                 Projectile projectile = Instantiate(projectilePrefab, transform);
                 projectile.tower = this;
                 projectile.targetedEnemy = enemyToShoot;

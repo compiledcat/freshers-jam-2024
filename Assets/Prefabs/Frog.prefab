@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9261a015349432748a7bbf1b9e9f1200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noMouth: {fileID: 21300000, guid: 00812a142c67fe44b834dcf191dfc567, type: 3}
+  yesMouth: {fileID: 21300000, guid: 0f3dcdfdd0a235747867438a1cc310b4, type: 3}
   shootingPriority: 0
   shootingRange: 4
   cooldownTime: 1
