@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -85,6 +86,9 @@ public class RoundManager : MonoBehaviour
 
             currentRound += 1;
 
+            //Only go to next round if all enemies are dead
+            yield return new WaitUntil(() => FindObjectOfType<Enemy>() == null);
+            
             //ugly code pls help me jowsey (from ava :p)
             if (currentRound < rounds.Count)
             {
