@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -20,6 +21,7 @@ public class Tower : MonoBehaviour
 
     public float cooldownTime;
     private float timeUntilNextShot;
+    public float GetCooldownTime() => projectilePrefab.projectileType == ProjectileType.Shoot ? cooldownTime : shootingRange / projectileSpeed * 2;
 
     public Projectile projectilePrefab;
     public float projectileSpeed;
@@ -60,13 +62,13 @@ public class Tower : MonoBehaviour
             }
             default:
             {
-                Debug.LogError("Enemy type not assigned!!!!");
+                UnityEngine.Debug.LogError("Enemy type not assigned!!!!");
                 enemyToShoot = null;
                 break;
             }
             }
             if (timeUntilNextShot <= 0) {
-                timeUntilNextShot = cooldownTime;
+                timeUntilNextShot = GetCooldownTime();
                 Projectile projectile = Instantiate(projectilePrefab, transform);
                 projectile.tower = this;
                 projectile.targetedEnemy = enemyToShoot;
@@ -74,5 +76,12 @@ public class Tower : MonoBehaviour
         }
 
         timeUntilNextShot -= Time.deltaTime;
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    private void OnDrawGizmos()
+    {
+        UnityEditor.Handles.color = new Color(1.0f, 0.6f, 0.6f, 0.5f);
+        UnityEditor.Handles.DrawSolidDisc(transform.position, Vector3.forward, shootingRange);
     }
 }

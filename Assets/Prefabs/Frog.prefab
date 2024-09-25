@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootingPriority: 0
-  shootingRange: 8
+  shootingRange: 4
   cooldownTime: 1
   projectilePrefab: {fileID: 1737230609456880476, guid: 8a64b1a1c100d5b4d81d8b1a7bcf994d, type: 3}
-  projectileSpeed: 5
+  projectileSpeed: 20
   projectileDamage: 1
