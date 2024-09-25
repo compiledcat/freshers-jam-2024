@@ -21,17 +21,22 @@ public class Enemy : MonoBehaviour
             _path = FindAnyObjectByType<SplineContainer>();
         }
 
-        Tween.Scale(transform, 1.05f, 1f, Ease.InOutCubic, cycleMode: CycleMode.Restart, cycles: -1);
+        Tween.Scale(transform, 1.05f, 1f, Ease.InOutQuad, cycleMode: CycleMode.Yoyo, cycles: -1);
     }
 
     private void LateUpdate()
     {
+        var originalPosition = transform.position;
+        
         _progress += _moveSpeed * Time.deltaTime;
         var splineProgress = _progress / _path.Spline.GetLength();
 
         var splinePosition = _path.Spline.EvaluatePosition(splineProgress);
         transform.position = _path.transform.TransformPoint(splinePosition);
 
+        var direction = (transform.position - originalPosition).normalized;
+        transform.up = -direction;
+        
         if (splineProgress >= 1f)
         {
             GameManager.Instance.HitBase();
