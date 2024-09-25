@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public class Enemy : MonoBehaviour
@@ -12,7 +14,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float _moveSpeed = 1.5f;
 
-    private float _progress;
+    private float _distanceTravelled;
 
     private void Awake()
     {
@@ -21,23 +23,32 @@ public class Enemy : MonoBehaviour
             _path = FindAnyObjectByType<SplineContainer>();
         }
 
-        Tween.Scale(transform, 1.05f, 1f, Ease.InOutCubic, cycleMode: CycleMode.Restart, cycles: -1);
+        Tween.Scale(transform, 1.05f, 1f, Ease.InOutQuad, cycleMode: CycleMode.Yoyo, cycles: -1);
     }
 
     private void LateUpdate()
     {
-        _progress += _moveSpeed * Time.deltaTime;
-        var splineProgress = _progress / _path.Spline.GetLength();
+        var originalPosition = transform.position;
 
-        var splinePosition = _path.Spline.EvaluatePosition(splineProgress);
-        transform.position = _path.transform.TransformPoint(splinePosition);
+        _distanceTravelled += _moveSpeed * Time.deltaTime;
+        var progress = _distanceTravelled / _path.Spline.GetLength();
 
-        if (splineProgress >= 1f)
+        transform.position = _path.transform.TransformPoint(_path.Spline.EvaluatePosition(progress));
+
+        var direction = (transform.position - originalPosition).normalized;
+        transform.up = -direction;
+
+        if (progress >= 1f)
         {
             GameManager.Instance.HitBase();
             Tween.Scale(transform, 0f, 0.5f, Ease.InBack).OnComplete(() => Destroy(gameObject));
 
             enabled = false;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawLine(transform.position, transform.position + transform.right, Color.yellow);
     }
 }
