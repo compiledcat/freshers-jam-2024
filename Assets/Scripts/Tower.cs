@@ -23,7 +23,7 @@ public class Tower : MonoBehaviour
 
     public Projectile projectilePrefab;
     public float projectileSpeed;
-    public float projectileDamage;
+    public int projectileDamage;
 
     private void Start()
     {

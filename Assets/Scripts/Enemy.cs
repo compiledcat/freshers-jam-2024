@@ -24,7 +24,8 @@ public class Enemy : MonoBehaviour
     public float _distanceTravelled;
 
     public EnemyType enemyType;
-    public float health;
+    public int health;
+    public int damage;
 
     private void Awake()
     {
@@ -58,7 +59,7 @@ public class Enemy : MonoBehaviour
 
         if (progress >= 1f)
         {
-            GameManager.Instance.HitBase();
+            GameManager.Instance.HitBase(damage);
             Tween.Scale(transform, 0f, 0.5f, Ease.InBack).OnComplete(() => Destroy(gameObject));
 
             enabled = false;
@@ -66,7 +67,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void TakeDamage(float dmgAmount) {
+    public void TakeDamage(int dmgAmount) {
         health -= dmgAmount;
         Tween.Color(GetComponent<SpriteRenderer>(), Color.red, 0.1f, Ease.InOutCubic, cycleMode: CycleMode.Rewind, cycles: 2);
         if (health <= 0) {

@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Deal damage to the player base
     /// </summary>
-    public void HitBase()
+    public void HitBase(int dmgAmount)
     {
-        Health -= 1;
+        Health -= dmgAmount;
     }
 }
