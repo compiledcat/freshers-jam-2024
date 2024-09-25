@@ -7,6 +7,13 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Random = UnityEngine.Random;
 
+
+public enum EnemyType //From weakest to strongest - used for ShootingPriority.Strong
+{
+    Fly = 0
+}
+
+
 [Serializable]
 public class Enemy : MonoBehaviour
 {
@@ -14,7 +21,11 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float _moveSpeed = 1.5f;
 
-    private float _distanceTravelled;
+    public float _distanceTravelled;
+
+    public EnemyType enemyType;
+    public int health;
+    public int damage;
 
     private void Awake()
     {
@@ -24,9 +35,17 @@ public class Enemy : MonoBehaviour
         }
 
         Tween.Scale(transform, 1.05f, 1f, Ease.InOutQuad, cycleMode: CycleMode.Yoyo, cycles: -1);
+
+        MoveAlongPath();
     }
 
     private void LateUpdate()
+    {
+        MoveAlongPath();
+    }
+
+
+    private void MoveAlongPath()
     {
         var originalPosition = transform.position;
 
@@ -40,12 +59,22 @@ public class Enemy : MonoBehaviour
 
         if (progress >= 1f)
         {
-            GameManager.Instance.HitBase();
+            GameManager.Instance.HitBase(damage);
             Tween.Scale(transform, 0f, 0.5f, Ease.InBack).OnComplete(() => Destroy(gameObject));
 
             enabled = false;
         }
     }
+
+
+    public void TakeDamage(int dmgAmount) {
+        health -= dmgAmount;
+        Tween.Color(GetComponent<SpriteRenderer>(), Color.red, 0.1f, Ease.InOutCubic, cycleMode: CycleMode.Rewind, cycles: 2);
+        if (health <= 0) {
+            Tween.Scale(transform, 0f, 0.1f, Ease.InBack).OnComplete(() => Destroy(gameObject));
+        }
+    }
+
 
     private void OnDrawGizmos()
     {

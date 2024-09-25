@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -52,22 +53,22 @@ public class RoundManager : MonoBehaviour
         //Loop through all rounds in game
         while (currentRound < rounds.Count)
         {
-            Debug.Log("Starting round.");
+            //Debug.Log("Starting round.");
             //Loop through all waves in round
             int currentWave = 0;
             while (currentWave < rounds[currentRound].waves.Count)
             {
-                Debug.Log("Starting wave.");
+                //Debug.Log("Starting wave.");
                 //Loop through all enemies in wave
                 int currentEnemy = 0;
                 while (currentEnemy < rounds[currentRound].waves[currentWave].enemies.Count)
                 {
-                    Debug.Log("Spawning enemy.");
+                    //Debug.Log("Spawning enemy.");
                     Instantiate(rounds[currentRound].waves[currentWave].enemies[currentEnemy]);
                     currentEnemy += 1;
                     yield return new WaitForSeconds(rounds[currentRound].waves[currentWave].timeBetweenEnemies);
                 }
-                Debug.Log("Wave complete.");
+                //Debug.Log("Wave complete.");
 
                 currentWave += 1;
 
@@ -81,10 +82,13 @@ public class RoundManager : MonoBehaviour
                     yield return null;
                 }
             }
-            Debug.Log("Round complete.");
+            //Debug.Log("Round complete.");
 
             currentRound += 1;
 
+            //Only go to next round if all enemies are dead
+            yield return new WaitUntil(() => FindObjectOfType<Enemy>() == null);
+            
             //ugly code pls help me jowsey (from ava :p)
             if (currentRound < rounds.Count)
             {
@@ -95,6 +99,6 @@ public class RoundManager : MonoBehaviour
                 yield return null;
             }
         }
-        Debug.Log("Game complete.");
+        //Debug.Log("Game complete.");
     }
 }
