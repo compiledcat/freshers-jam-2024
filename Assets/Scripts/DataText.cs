@@ -5,7 +5,8 @@ public class DataText : MonoBehaviour
 {
     public enum Value
     {
-        BaseHealth
+        BaseHealth,
+        Money
     }
 
     [SerializeField] private Value _value;
@@ -25,6 +26,9 @@ public class DataText : MonoBehaviour
         {
             case Value.BaseHealth:
                 _text.text = $"{GameManager.Instance.Health}";
+                break;
+            case Value.Money:
+                _text.text = $"{GameManager.Instance.Money}";
                 break;
         }
     }

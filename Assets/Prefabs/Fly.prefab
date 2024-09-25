@@ -102,6 +102,7 @@ MonoBehaviour:
   _moveSpeed: 3
   _distanceTravelled: 0
   enemyType: 0
+  moneyValue: 2
   health: 1
   damage: 1
 --- !u!70 &-334261725136660472

@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     public float _distanceTravelled;
 
     public EnemyType enemyType;
+    public int moneyValue;
     public int health;
     public int damage;
 
@@ -73,6 +74,11 @@ public class Enemy : MonoBehaviour
         if (health <= 0) {
             Tween.Scale(transform, 0f, 0.1f, Ease.InBack).OnComplete(() => Destroy(gameObject));
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.Money += moneyValue;
     }
 
 
