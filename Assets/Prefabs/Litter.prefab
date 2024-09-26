@@ -102,7 +102,7 @@ MonoBehaviour:
   _distanceTravelled: 0
   enemyType: 1
   health: 2
-  damage: 1
+  damage: 4
 --- !u!70 &-334261725136660472
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

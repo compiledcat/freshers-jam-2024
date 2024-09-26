@@ -24,7 +24,7 @@ public class DataText : MonoBehaviour
         switch (_value)
         {
             case Value.BaseHealth:
-                _text.text = $"{GameManager.Instance.Health}";
+                _text.text = $"{GameManager.Instance.health}";
                 break;
         }
     }
