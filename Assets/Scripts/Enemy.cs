@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
+using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -23,7 +24,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float _moveSpeed = 1.5f;
 
-    public float _distanceTravelled;
+    [ReadOnly] public float _distanceTravelled;
 
     public EnemyType enemyType;
     public int health;
@@ -31,7 +32,6 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-
         if (!_path)
         {
             _path = FindAnyObjectByType<SplineContainer>();
@@ -70,10 +70,13 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void TakeDamage(int dmgAmount) {
+    public void TakeDamage(int dmgAmount)
+    {
         health -= dmgAmount;
-        Tween.Color(GetComponent<SpriteRenderer>(), Color.red, 0.1f, Ease.InOutCubic, cycleMode: CycleMode.Rewind, cycles: 2);
-        if (health <= 0) {
+        Tween.Color(GetComponent<SpriteRenderer>(), Color.red, 0.1f, Ease.InOutCubic, cycleMode: CycleMode.Rewind,
+            cycles: 2);
+        if (health <= 0)
+        {
             Tween.Scale(transform, 0f, 0.1f, Ease.InBack).OnComplete(() => Destroy(gameObject));
         }
     }
