@@ -20,7 +20,7 @@ public class TowerMenu : MonoBehaviour
             menuButton.Image.color = tower.GetComponent<SpriteRenderer>().color;
             menuButton.TowerPrefab = tower;
             
-            menuButton.Button.onClick.AddListener(() => Debug.Log(tower));
+            // menuButton.Button.onClick.AddListener(() => Debug.Log(tower));
         }
     }
 }
