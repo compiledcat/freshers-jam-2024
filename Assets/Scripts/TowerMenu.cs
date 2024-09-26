@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TowerMenu : MonoBehaviour
 {
     private static List<Tower> _towers = new();
-    [SerializeField] private Image _towerMenuButtonPrefab;
+    [SerializeField] private TowerMenuButton _towerMenuButtonPrefab;
 
     private void Awake()
     {
@@ -16,10 +16,11 @@ public class TowerMenu : MonoBehaviour
         {
             var menuButton = Instantiate(_towerMenuButtonPrefab, transform);
             
-            menuButton.sprite = tower.GetComponent<SpriteRenderer>().sprite;
-            menuButton.color = tower.GetComponent<SpriteRenderer>().color;
+            menuButton.Image.sprite = tower.GetComponent<SpriteRenderer>().sprite;
+            menuButton.Image.color = tower.GetComponent<SpriteRenderer>().color;
+            menuButton.TowerPrefab = tower;
             
-            menuButton.GetComponent<Button>().onClick.AddListener(() => Debug.Log(tower));
+            menuButton.Button.onClick.AddListener(() => Debug.Log(tower));
         }
     }
 }

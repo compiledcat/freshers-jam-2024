@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
-
+using Debug = UnityEngine.Debug;
 
 public enum ShootingPriority
 {
@@ -12,7 +11,6 @@ public enum ShootingPriority
     Strong,
     Close
 }
-
 
 public class Tower : MonoBehaviour
 {
@@ -66,11 +64,15 @@ public class Tower : MonoBehaviour
             }
             default:
             {
-                UnityEngine.Debug.LogError("Enemy type not assigned!!!!");
+                Debug.LogError("Enemy type not assigned!!!!");
                 enemyToShoot = null;
                 break;
             }
             }
+            
+            // get angle of enemy to shoot, if left, flip sprite x
+            GetComponent<SpriteRenderer>().flipX = enemyToShoot?.transform.position.x < transform.position.x;
+            
             if (timeUntilNextShot <= 0) {
                 timeUntilNextShot = GetCooldownTime();
                 GetComponent<SpriteRenderer>().sprite = noMouth;
@@ -84,7 +86,7 @@ public class Tower : MonoBehaviour
     }
 
     [Conditional("UNITY_EDITOR")]
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         UnityEditor.Handles.color = new Color(1.0f, 0.6f, 0.6f, 0.5f);
         UnityEditor.Handles.DrawSolidDisc(transform.position, Vector3.forward, shootingRange);

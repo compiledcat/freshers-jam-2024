@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Debug.DrawLine(transform.position, transform.position + transform.right, Color.yellow);
     }
