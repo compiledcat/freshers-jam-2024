@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 3971898050756780288}
   - component: {fileID: 5352870980905834569}
   - component: {fileID: -334261725136660472}
-  - component: {fileID: -6323041798683587536}
   m_Layer: 0
-  m_Name: Fly
+  m_Name: Litter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 71b744075b5fcb54b9716dad58ac1629, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ead645ce55032f4eb09aa16a642fc26, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,10 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d5388b516130c4fb31f3c349093c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 3
+  _moveSpeed: 10
   _distanceTravelled: 0
-  enemyType: 0
-  health: 1
+  enemyType: 1
+  health: 2
   damage: 1
 --- !u!70 &-334261725136660472
 CapsuleCollider2D:
@@ -139,24 +138,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 2, y: 2.56}
   m_Direction: 0
---- !u!95 &-6323041798683587536
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8048002796666738688}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 71ec6556f2df388439a882d5ff237295, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

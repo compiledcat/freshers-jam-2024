@@ -10,7 +10,9 @@ using Random = UnityEngine.Random;
 
 public enum EnemyType //From weakest to strongest - used for ShootingPriority.Strong
 {
-    Fly = 0
+    Fly = 0,
+    Litter = 1,
+    Navy = 2
 }
 
 
