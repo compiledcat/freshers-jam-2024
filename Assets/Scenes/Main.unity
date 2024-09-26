@@ -665,20 +665,21 @@ MonoBehaviour:
   - waves:
     - enemies:
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
-      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: 501c166dd489ab9439677b9a83acfd11, type: 3}
       timeBetweenEnemies: 0.5
     - enemies:
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: 501c166dd489ab9439677b9a83acfd11, type: 3}
       - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
-      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: 244f741ab78413c43afef6ab80abb1f9, type: 3}
       timeBetweenEnemies: 1
     timeBetweenWaves:
     - 2
   - waves:
     - enemies:
-      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
-      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
-      - {fileID: 8048002796666738688, guid: e4d62e7194904dd4091b0ab87158f8c8, type: 3}
+      - {fileID: 8048002796666738688, guid: 501c166dd489ab9439677b9a83acfd11, type: 3}
+      - {fileID: 8048002796666738688, guid: 244f741ab78413c43afef6ab80abb1f9, type: 3}
+      - {fileID: 8048002796666738688, guid: 244f741ab78413c43afef6ab80abb1f9, type: 3}
       timeBetweenEnemies: 1
     timeBetweenWaves: []
   timeBetweenRounds: 3
