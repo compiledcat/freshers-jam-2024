@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+
         if (!_path)
         {
             _path = FindAnyObjectByType<SplineContainer>();
