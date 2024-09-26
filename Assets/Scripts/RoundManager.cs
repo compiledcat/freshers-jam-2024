@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Splines;
 using UnityEngine.UIElements;
 
 
@@ -40,6 +41,9 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
+
+        FindObjectOfType<SplineContainer>().transform.localScale = new Vector3(1, 1, 0);
+
         currentRound = 0;
         timeBetweenRounds = 3.0f;
         

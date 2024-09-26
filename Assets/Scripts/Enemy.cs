@@ -10,7 +10,9 @@ using Random = UnityEngine.Random;
 
 public enum EnemyType //From weakest to strongest - used for ShootingPriority.Strong
 {
-    Fly = 0
+    Fly = 0,
+    Litter = 1,
+    Navy = 2
 }
 
 
@@ -29,6 +31,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+
         if (!_path)
         {
             _path = FindAnyObjectByType<SplineContainer>();
