@@ -23,7 +23,10 @@ public class Tower : MonoBehaviour
 
     public float cooldownTime;
     private float timeUntilNextShot;
-    public float GetCooldownTime() => projectilePrefab.projectileType == ProjectileType.Shoot ? cooldownTime : shootingRange / projectileSpeed * 2;
+    
+    public float GetComputedCooldownTime() => projectilePrefab.projectileType == ProjectileType.Shoot 
+        ? cooldownTime 
+        : (shootingRange / projectileSpeed) * 2 + cooldownTime; // time to extend, un-extend, and cooldown
 
     public Projectile projectilePrefab;
     public float projectileSpeed;
@@ -75,7 +78,14 @@ public class Tower : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = enemyToShoot?.transform.position.x < transform.position.x;
 
             if (timeUntilNextShot <= 0) {
-                Attack(enemyToShoot);
+                timeUntilNextShot = GetComputedCooldownTime();
+                GetComponent<SpriteRenderer>().sprite = attackingSprite;
+                Projectile projectile = Instantiate(projectilePrefab, transform);
+                projectile.tower = this;
+                projectile.targetedEnemy = enemyToShoot;
+            }
+            else if (timeUntilNextShot <= cooldownTime/2 && projectilePrefab.projectileType == ProjectileType.Shoot) {
+                GetComponent<SpriteRenderer>().sprite = idleSprite;
             }
         }
 
@@ -89,7 +99,7 @@ public class Tower : MonoBehaviour
 
     protected virtual void Attack(Enemy enemy)
     {
-        timeUntilNextShot = GetCooldownTime();
+        timeUntilNextShot = GetComputedCooldownTime();
         GetComponent<SpriteRenderer>().sprite = attackingSprite;
         Projectile projectile = Instantiate(projectilePrefab, transform);
         projectile.tower = this;

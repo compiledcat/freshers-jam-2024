@@ -27,7 +27,8 @@ public class Projectile : MonoBehaviour
 
         if (projectileType == ProjectileType.Extend) {
             transform.localScale = new Vector3(transform.localScale.x, 0, transform.localScale.z);
-            Tween.ScaleY(transform, tower.shootingRange, tower.shootingRange / tower.projectileSpeed, Ease.OutCubic, cycleMode: CycleMode.Rewind, cycles: 2).OnComplete(() => tower.GetComponent<SpriteRenderer>().sprite = tower.idleSprite);
+            Tween.ScaleY(transform, tower.shootingRange, tower.shootingRange / tower.projectileSpeed, Ease.OutCubic, cycleMode: CycleMode.Rewind, cycles: 2)
+                .OnComplete(() => tower.GetComponent<SpriteRenderer>().sprite = tower.idleSprite);
         }
     }
 
@@ -35,7 +36,7 @@ public class Projectile : MonoBehaviour
     {
         if (projectileType == ProjectileType.Shoot)
         {
-            transform.position += transform.up * tower.projectileSpeed * Time.deltaTime;
+            transform.position += transform.up * (tower.projectileSpeed * Time.deltaTime);
         }
     }
 
