@@ -1438,7 +1438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1328515356}
   m_Layer: 0
-  m_Name: Lilypads
+  m_Name: Tower Spots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
