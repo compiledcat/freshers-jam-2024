@@ -99,7 +99,7 @@ public class Tower : MonoBehaviour
 
     protected virtual void Attack(Enemy enemy)
     {
-        timeUntilNextShot = GetCooldownTime();
+        timeUntilNextShot = GetComputedCooldownTime();
         GetComponent<SpriteRenderer>().sprite = attackingSprite;
         Projectile projectile = Instantiate(projectilePrefab, transform);
         projectile.tower = this;
