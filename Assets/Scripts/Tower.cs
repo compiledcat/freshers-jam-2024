@@ -29,7 +29,7 @@ public class Tower : MonoBehaviour
     public float projectileSpeed;
     public int projectileDamage;
 
-    private void Start()
+    protected virtual void Awake()
     {
         GetComponent<SpriteRenderer>().sprite = idleSprite;
         timeUntilNextShot = 0;
@@ -75,11 +75,7 @@ public class Tower : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = enemyToShoot?.transform.position.x < transform.position.x;
 
             if (timeUntilNextShot <= 0) {
-                timeUntilNextShot = GetCooldownTime();
-                GetComponent<SpriteRenderer>().sprite = attackingSprite;
-                Projectile projectile = Instantiate(projectilePrefab, transform);
-                projectile.tower = this;
-                projectile.targetedEnemy = enemyToShoot;
+                Attack(enemyToShoot);
             }
         }
 
@@ -89,6 +85,15 @@ public class Tower : MonoBehaviour
         }
 
         timeUntilNextShot -= Time.deltaTime;
+    }
+
+    protected virtual void Attack(Enemy enemy)
+    {
+        timeUntilNextShot = GetCooldownTime();
+        GetComponent<SpriteRenderer>().sprite = attackingSprite;
+        Projectile projectile = Instantiate(projectilePrefab, transform);
+        projectile.tower = this;
+        projectile.targetedEnemy = enemy;
     }
 
     [Conditional("UNITY_EDITOR")]
