@@ -15,11 +15,11 @@ public class TowerMenu : MonoBehaviour
         foreach (var tower in _towers)
         {
             var menuButton = Instantiate(_towerMenuButtonPrefab, transform);
-            
+
             menuButton.Image.sprite = tower.GetComponent<SpriteRenderer>().sprite;
             menuButton.Image.color = tower.GetComponent<SpriteRenderer>().color;
             menuButton.TowerPrefab = tower;
-            
+
             // menuButton.Button.onClick.AddListener(() => Debug.Log(tower));
         }
     }
