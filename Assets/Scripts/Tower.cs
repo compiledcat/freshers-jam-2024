@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class Tower : MonoBehaviour
     public float projectileSpeed;
     public int projectileDamage;
 
-    private void Start()
+    protected virtual void Awake()
     {
         GetComponent<SpriteRenderer>().sprite = idleSprite;
         timeUntilNextShot = 0;
@@ -72,10 +73,10 @@ public class Tower : MonoBehaviour
                 break;
             }
             }
-            
+
             // get angle of enemy to shoot, if left, flip sprite x
             GetComponent<SpriteRenderer>().flipX = enemyToShoot?.transform.position.x < transform.position.x;
-            
+
             if (timeUntilNextShot <= 0) {
                 timeUntilNextShot = GetComputedCooldownTime();
                 GetComponent<SpriteRenderer>().sprite = attackingSprite;
@@ -88,7 +89,21 @@ public class Tower : MonoBehaviour
             }
         }
 
+        if (timeUntilNextShot <= cooldownTime / 2 && projectilePrefab.projectileType == ProjectileType.Shoot && GetComponent<SpriteRenderer>().sprite != idleSprite)
+        {
+            GetComponent<SpriteRenderer>().sprite = idleSprite;
+        }
+
         timeUntilNextShot -= Time.deltaTime;
+    }
+
+    protected virtual void Attack(Enemy enemy)
+    {
+        timeUntilNextShot = GetCooldownTime();
+        GetComponent<SpriteRenderer>().sprite = attackingSprite;
+        Projectile projectile = Instantiate(projectilePrefab, transform);
+        projectile.tower = this;
+        projectile.targetedEnemy = enemy;
     }
 
     [Conditional("UNITY_EDITOR")]

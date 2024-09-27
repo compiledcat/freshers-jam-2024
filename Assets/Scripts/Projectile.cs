@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
 
     private bool collided; //To avoid hitting multiple enemies in the same frame
 
-    private void Start()
+    protected virtual void Start()
     {
         transform.up = targetedEnemy.transform.position - transform.position;
 
@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (projectileType == ProjectileType.Shoot)
         {
