@@ -104,4 +104,4 @@ MonoBehaviour:
   cooldownTime: 3
   projectilePrefab: {fileID: 3540914793973430578, guid: ca0c2b90e32359e46a624675feade7c6, type: 3}
   projectileSpeed: 2
-  projectileDamage: 0
+  projectileDamage: 1
