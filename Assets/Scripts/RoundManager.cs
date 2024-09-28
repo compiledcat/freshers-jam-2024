@@ -38,6 +38,9 @@ public class RoundManager : MonoBehaviour
     public float timeBetweenRounds; //In seconds
     public int currentRound;
 
+    [SerializeField] private int roundsPerScene;
+    [SerializeField] private CameraMovement cameraMovement;
+
 
     private void Start()
     {
@@ -96,7 +99,16 @@ public class RoundManager : MonoBehaviour
             //ugly code pls help me jowsey (from ava :p)
             if (currentRound < rounds.Count)
             {
-                yield return new WaitForSeconds(timeBetweenRounds);
+                //Check if camera has to advance to next scene, if so, add the time it takes for the camera to move to the delay between rounds
+                if (currentRound % roundsPerScene == 0 && currentRound > 0)
+                {
+                    cameraMovement.AdvanceScene();
+                    yield return new WaitForSeconds(timeBetweenRounds + cameraMovement.advancementTimeForNextScene);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(timeBetweenRounds);
+                }
             }
             else
             {
