@@ -19,7 +19,7 @@ public class TowerMenuButton : MonoBehaviour, IPointerDownHandler, IDragHandler,
     {
         _cam = Camera.main;
         
-        _tooltipTrigger.text = $"{TowerPrefab.name} <size=70%>Tower</size>\n\n" +
+        _tooltipTrigger.text = $"{TowerPrefab.name}  <size=70%>Tower</size>\n\n" +
                                $"Range: {TowerPrefab.shootingRange}m\n" +
                                $"Cooldown: {TowerPrefab.GetComputedCooldownTime()}s\n" +
                                $"Damage: {TowerPrefab.projectileDamage}";

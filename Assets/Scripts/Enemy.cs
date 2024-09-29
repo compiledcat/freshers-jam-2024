@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using PrimeTween;
 using Sirenix.OdinInspector;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using Random = UnityEngine.Random;
 
 
 public enum EnemyType //From weakest to strongest - used for ShootingPriority.Strong

@@ -5,11 +5,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public int maxHealth = 20;
     public int health;
+    
     [SerializeField] private SpriteRenderer queenFrog;
     [SerializeField] private Sprite idleFrogSprite;
     [SerializeField] private Sprite hurtFrogSprite;
     [SerializeField] private Sprite deadFrogSprite;
 
+    public int Money = 25;
+    
     private void Awake()
     {
         health = maxHealth;
