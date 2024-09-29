@@ -73,6 +73,13 @@ public class Enemy : MonoBehaviour
     }
 
 
+    private void Die()
+    {
+        GameManager.Instance.Money += (int)strength;
+        Destroy(gameObject);
+    }
+
+
     public void TakeDamage(int dmgAmount)
     {
         health -= dmgAmount;
@@ -80,7 +87,7 @@ public class Enemy : MonoBehaviour
             cycles: 2);
         if (health <= 0)
         {
-            Tween.Scale(transform, 0f, 0.1f, Ease.InBack).OnComplete(() => Destroy(gameObject));
+            Tween.Scale(transform, 0f, 0.1f, Ease.InBack).OnComplete(() => Die());
         }
     }
 
