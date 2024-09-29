@@ -99,7 +99,7 @@ public class Tower : MonoBehaviour
                 }
                 case ShootingPriority.Strong:
                 {
-                    enemyToShoot = enemiesInRange.OrderBy(e => e.enemyType).Last();
+                    enemyToShoot = enemiesInRange.OrderBy(e => e.strength).Last();
                     break;
                 }
                 case ShootingPriority.Close:
