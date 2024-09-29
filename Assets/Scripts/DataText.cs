@@ -31,7 +31,6 @@ public class DataText : MonoBehaviour
                 _text.text = $"{_prefix}{GameManager.Instance.health}{_suffix}";
                 break;
             case Value.Money:
-                Debug.Log(GameManager.Instance.Money);
                 _text.text = $"{_prefix}{GameManager.Instance.Money}{_suffix}";
                 break;
         }
