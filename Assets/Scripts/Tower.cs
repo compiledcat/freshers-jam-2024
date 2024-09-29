@@ -34,6 +34,10 @@ public class Tower : MonoBehaviour
     public float projectileSpeed;
     public int projectileDamage;
 
+    private int startingProjectileDamage;
+    private float startingProjectileSpeed;
+    private float startingShootingRange;
+
     public int cost;
 
     private TowerUpgradeTooltip _towerUpgradeTooltipPrefab;
@@ -43,6 +47,11 @@ public class Tower : MonoBehaviour
 
     protected virtual void Awake()
     {
+
+        startingProjectileDamage = projectileDamage;
+        startingProjectileSpeed = projectileSpeed;
+        startingShootingRange = shootingRange;
+
         GetComponent<SpriteRenderer>().sprite = idleSprite;
         timeUntilNextShot = 0;
 
@@ -51,6 +60,10 @@ public class Tower : MonoBehaviour
         _towerUpgradeTooltipPrefab = Resources.Load<TowerUpgradeTooltip>("UI/TowerUpgradeTooltip");
         _towerUpgradeTooltip = Instantiate(_towerUpgradeTooltipPrefab, _canvas.transform);
         _towerUpgradeTooltip.Tower = this;
+
+        _towerUpgradeTooltip.DamageUpgrade.OnUpgrade.AddListener(() => { projectileDamage = startingProjectileDamage + _towerUpgradeTooltip.DamageUpgrade.Level; });
+        _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() => { shootingRange = startingProjectileSpeed + _towerUpgradeTooltip.RangeUpgrade.Level; });
+        _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() => { projectileSpeed = startingShootingRange + _towerUpgradeTooltip.SpeedUpgrade.Level; });
     }
 
     public void OnMouseDown()
@@ -65,6 +78,7 @@ public class Tower : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(projectileDamage);
         Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         List<Enemy> enemiesInRange = enemies
             .Where(e => Vector3.Distance(transform.position, e.transform.position) <= shootingRange).ToList();
