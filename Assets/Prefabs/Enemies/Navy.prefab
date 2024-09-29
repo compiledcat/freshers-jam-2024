@@ -51,9 +51,6 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -106,6 +103,11 @@ MonoBehaviour:
   enemyType: 2
   health: 3
   damage: 6
+  strength: 0
+  minHealth: 4
+  maxHealth: 6
+  minDamage: 4
+  maxDamage: 7
 --- !u!70 &-334261725136660472
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityEngine.Splines.Interpolators;
 
 
 [Serializable]
@@ -75,6 +76,22 @@ public class RoundManager : MonoBehaviour
     }
 
 
+    Color StrengthToColor(float strength, float maxStrength)
+    {
+        return Color.Lerp(Color.green, Color.red, strength/maxStrength);
+    }
+
+    float StrengthToScale(float strength, float maxStrength)
+    {
+        Debug.Log("");
+        Debug.Log(strength);
+        Debug.Log(maxStrength);
+        Debug.Log(Mathf.Lerp(0.5f, 2.0f, strength / maxStrength));
+        Debug.Log("");
+        return Mathf.Lerp(0.5f, 2.0f, strength / maxStrength);
+    }
+
+
     //Plays all rounds in game
     IEnumerator PlayGame()
     {
@@ -98,6 +115,10 @@ public class RoundManager : MonoBehaviour
                     enemy.health = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
                     enemy.damage = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
                     enemy.strength = enemy.health + enemy.damage * 2;
+                    float maxStrength = enemy.maxHealth + enemy.maxDamage * 2;
+                    enemy.GetComponent<SpriteRenderer>().color = StrengthToColor(enemy.strength, maxStrength);
+                    float scale = StrengthToScale(enemy.strength, maxStrength);
+                    enemy.transform.localScale = new Vector3(scale, scale, 1);
 
                     currentEnemy += 1;
                     yield return new WaitForSeconds(rounds[currentRound].waves[currentWave].timeBetweenEnemies);
