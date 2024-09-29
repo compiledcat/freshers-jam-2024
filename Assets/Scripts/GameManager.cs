@@ -11,12 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite hurtFrogSprite;
     [SerializeField] private Sprite deadFrogSprite;
 
-    public int Money = 25;
+    public int Money;
     
     private void Awake()
     {
         health = maxHealth;
         Instance = this;
+        Money = 25;
     }
     
     private void Update()
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale += 1;
         }
+
+        Debug.Log(Money);
 #endif
     }
 

@@ -34,6 +34,8 @@ public class Tower : MonoBehaviour
     public float projectileSpeed;
     public int projectileDamage;
 
+    public int cost;
+
     private TowerUpgradeTooltip _towerUpgradeTooltipPrefab;
     private TowerUpgradeTooltip _towerUpgradeTooltip;
 
