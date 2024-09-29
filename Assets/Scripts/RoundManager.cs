@@ -8,7 +8,11 @@ using UnityEngine.Splines;
 [Serializable]
 public struct RoundData
 {
-    RoundData(List<WaveData> _waves, List<float> _timeBetweenWaves) { waves = _waves; timeBetweenWaves = _timeBetweenWaves; }
+    public RoundData(List<WaveData> _waves = null, List<float> _timeBetweenWaves = null)
+    {
+        waves = _waves ?? new List<WaveData>();
+        timeBetweenWaves = _timeBetweenWaves ?? new List<float>();
+    }
 
     //Parallel arrays - remember your fence posts (length of timeBetweenWaves should be one less than length of waves)
     public List<WaveData> waves;
@@ -19,9 +23,15 @@ public struct RoundData
 [Serializable]
 public struct WaveData
 {
-    WaveData(List<GameObject> _enemies, float _timeBetweenEnemies) { enemies = _enemies; timeBetweenEnemies = _timeBetweenEnemies; }
+    public WaveData(int _numEnemies = 0, float _timeBetweenEnemies = 0)
+    {
+        numEnemies = _numEnemies;
+        timeBetweenEnemies = _timeBetweenEnemies;
+    }
 
-    public List<GameObject> enemies;
+    //public List<GameObject> enemies;
+    public int numEnemies;
+
     public float timeBetweenEnemies; //In seconds
 }
 
@@ -31,7 +41,7 @@ public class RoundManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> enemy_prefabs;
 
-    public List<RoundData> rounds;
+    private List<RoundData> rounds;
     public float timeBetweenRounds; //In seconds
     public int currentRound;
     public int currentScene;
@@ -47,7 +57,20 @@ public class RoundManager : MonoBehaviour
 
         currentRound = 0;
         timeBetweenRounds = 3.0f;
+
+        rounds = new List<RoundData>();
         
+        for (int i=0; i<roundsPerScene*3; i++)
+        {
+            Debug.Log(i);
+            int numWaves = UnityEngine.Random.Range(3, 10);
+            RoundData round = new RoundData(null, null);
+            for (int k = 0; k < numWaves; k++) {
+                round.waves.Add(new WaveData(UnityEngine.Random.Range(5, 25), UnityEngine.Random.Range(0.25f, 3.0f)));
+            }
+            rounds.Add(round);
+        }
+        Debug.Log(rounds.Count);
         StartCoroutine(PlayGame());
     }
 
@@ -58,20 +81,24 @@ public class RoundManager : MonoBehaviour
         //Loop through all rounds in game
         while (currentRound < rounds.Count)
         {
-            //Debug.Log("Starting round.");
+            Debug.Log("STARTING ROUND.");
             //Loop through all waves in round
             int currentWave = 0;
             while (currentWave < rounds[currentRound].waves.Count)
             {
-                //Debug.Log("Starting wave.");
+                Debug.Log("Starting wave.");
                 //Loop through all enemies in wave
                 int currentEnemy = 0;
-                while (currentEnemy < rounds[currentRound].waves[currentWave].enemies.Count)
+                while (currentEnemy < rounds[currentRound].waves[currentWave].numEnemies)
                 {
                     //Debug.Log("Spawning enemy.");
                     //Instantiate(rounds[currentRound].waves[currentWave].enemies[currentEnemy]);
 
-                    Instantiate(enemy_prefabs[currentScene]);
+                    Enemy enemy = Instantiate(enemy_prefabs[currentScene]).GetComponent<Enemy>();
+                    enemy.health = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
+                    enemy.damage = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
+                    enemy.strength = enemy.health + enemy.damage * 2;
+
                     currentEnemy += 1;
                     yield return new WaitForSeconds(rounds[currentRound].waves[currentWave].timeBetweenEnemies);
                 }
