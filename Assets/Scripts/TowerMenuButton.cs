@@ -63,8 +63,10 @@ public class TowerMenuButton : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
         if (raycastHit && raycastHit.transform.TryGetComponent<TowerSpot>(out var towerSpot))
         {
-            if (towerSpot.Tower != null) return;
-            if (GameManager.Instance.Money < TowerPrefab.cost) return;
+            if (towerSpot.Tower != null) { return; }
+            if (GameManager.Instance.Money < TowerPrefab.cost) { return; }
+            if (TowerPrefab.towerPlacementType != towerSpot.towerPlacementType) { return; }
+
             GameManager.Instance.Money -= TowerPrefab.cost;
 
             var tower = Instantiate(TowerPrefab, towerSpot.transform);

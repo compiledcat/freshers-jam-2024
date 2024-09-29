@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ddaaf66f32b268429762df0b685eca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPlacementType: 1
   idleSprite: {fileID: 21300000, guid: 7418629a1b0c7db4b878bcec034250a9, type: 3}
   attackingSprite: {fileID: 21300000, guid: 7418629a1b0c7db4b878bcec034250a9, type: 3}
   shootingPriority: 0
@@ -106,6 +107,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3540914793973430578, guid: ca0c2b90e32359e46a624675feade7c6, type: 3}
   projectileSpeed: 2
   projectileDamage: 1
+  cost: 0
 --- !u!61 &3914818797764012777
 BoxCollider2D:
   m_ObjectHideFlags: 0

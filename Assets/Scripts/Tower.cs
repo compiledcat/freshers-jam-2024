@@ -15,8 +15,16 @@ public enum ShootingPriority
     Close
 }
 
+public enum TowerPlacementType
+{
+    Land,
+    Water
+}
+
 public class Tower : MonoBehaviour
 {
+    public TowerPlacementType towerPlacementType;
+
     public Sprite idleSprite;
     public Sprite attackingSprite;
 
@@ -62,8 +70,8 @@ public class Tower : MonoBehaviour
         _towerUpgradeTooltip.Tower = this;
 
         _towerUpgradeTooltip.DamageUpgrade.OnUpgrade.AddListener(() => { projectileDamage = startingProjectileDamage + _towerUpgradeTooltip.DamageUpgrade.Level; });
-        _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() => { shootingRange = startingProjectileSpeed + _towerUpgradeTooltip.RangeUpgrade.Level; });
-        _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() => { projectileSpeed = startingShootingRange + _towerUpgradeTooltip.SpeedUpgrade.Level; });
+        _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() => { shootingRange = startingShootingRange + _towerUpgradeTooltip.RangeUpgrade.Level; });
+        _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() => { projectileSpeed = startingProjectileSpeed + _towerUpgradeTooltip.SpeedUpgrade.Level; Debug.Log(projectileSpeed); });
     }
 
     public void OnMouseDown()
