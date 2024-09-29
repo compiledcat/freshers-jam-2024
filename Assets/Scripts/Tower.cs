@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 public enum ShootingPriority
@@ -23,73 +25,116 @@ public class Tower : MonoBehaviour
 
     public float cooldownTime;
     private float timeUntilNextShot;
-    
-    public float GetComputedCooldownTime() => projectilePrefab.projectileType == ProjectileType.Shoot 
-        ? cooldownTime 
+
+    public float GetComputedCooldownTime() => projectilePrefab.projectileType == ProjectileType.Shoot
+        ? cooldownTime
         : (shootingRange / projectileSpeed) * 2 + cooldownTime; // time to extend, un-extend, and cooldown
 
     public Projectile projectilePrefab;
     public float projectileSpeed;
     public int projectileDamage;
 
+    private int startingProjectileDamage;
+    private float startingProjectileSpeed;
+    private float startingShootingRange;
+
+    public int cost;
+
+    private TowerUpgradeTooltip _towerUpgradeTooltipPrefab;
+    private TowerUpgradeTooltip _towerUpgradeTooltip;
+
+    private Canvas _canvas;
+
     protected virtual void Awake()
     {
+
+        startingProjectileDamage = projectileDamage;
+        startingProjectileSpeed = projectileSpeed;
+        startingShootingRange = shootingRange;
+
         GetComponent<SpriteRenderer>().sprite = idleSprite;
         timeUntilNextShot = 0;
+
+        _canvas = FindObjectOfType<Canvas>();
+
+        _towerUpgradeTooltipPrefab = Resources.Load<TowerUpgradeTooltip>("UI/TowerUpgradeTooltip");
+        _towerUpgradeTooltip = Instantiate(_towerUpgradeTooltipPrefab, _canvas.transform);
+        _towerUpgradeTooltip.Tower = this;
+
+        _towerUpgradeTooltip.DamageUpgrade.OnUpgrade.AddListener(() => { projectileDamage = startingProjectileDamage + _towerUpgradeTooltip.DamageUpgrade.Level; });
+        _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() => { shootingRange = startingProjectileSpeed + _towerUpgradeTooltip.RangeUpgrade.Level; });
+        _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() => { projectileSpeed = startingShootingRange + _towerUpgradeTooltip.SpeedUpgrade.Level; });
+    }
+
+    public void OnMouseDown()
+    {
+        _towerUpgradeTooltip.Appear();
+    }
+
+    public void SetTargetingMode(ShootingPriority priority)
+    {
+        shootingPriority = priority;
     }
 
     private void Update()
     {
+        Debug.Log(projectileDamage);
         Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-        List<Enemy> enemiesInRange = enemies.Where(e => Vector3.Distance(transform.position, e.transform.position) <= shootingRange).ToList();
-        if (enemiesInRange.Count > 0) {
+        List<Enemy> enemiesInRange = enemies
+            .Where(e => Vector3.Distance(transform.position, e.transform.position) <= shootingRange).ToList();
+        if (enemiesInRange.Count > 0)
+        {
             Enemy enemyToShoot;
             switch (shootingPriority)
             {
-            case ShootingPriority.First:
-            {
-                enemyToShoot = enemiesInRange.OrderBy(e => e._distanceTravelled).Last();
-                break;
-            }
-            case ShootingPriority.Last:
-            { 
-                enemyToShoot = enemiesInRange.OrderBy(e => e._distanceTravelled).First();
-                break;
-            }
-            case ShootingPriority.Strong:
-            {
-                enemyToShoot = enemiesInRange.OrderBy(e => e.enemyType).Last();
-                break;
-            }
-            case ShootingPriority.Close:
-            {
-                enemyToShoot = enemiesInRange.OrderBy(e => Vector3.Distance(transform.position, e.transform.position)).First();
-                break;
-            }
-            default:
-            {
-                Debug.LogError("Enemy type not assigned!!!!");
-                enemyToShoot = null;
-                break;
-            }
+                case ShootingPriority.First:
+                {
+                    enemyToShoot = enemiesInRange.OrderBy(e => e._distanceTravelled).Last();
+                    break;
+                }
+                case ShootingPriority.Last:
+                {
+                    enemyToShoot = enemiesInRange.OrderBy(e => e._distanceTravelled).First();
+                    break;
+                }
+                case ShootingPriority.Strong:
+                {
+                    enemyToShoot = enemiesInRange.OrderBy(e => e.strength).Last();
+                    break;
+                }
+                case ShootingPriority.Close:
+                {
+                    enemyToShoot = enemiesInRange
+                        .OrderBy(e => Vector3.Distance(transform.position, e.transform.position)).First();
+                    break;
+                }
+                default:
+                {
+                    Debug.LogError("Enemy type not assigned!!!!");
+                    enemyToShoot = null;
+                    break;
+                }
             }
 
             // get angle of enemy to shoot, if left, flip sprite x
             GetComponent<SpriteRenderer>().flipX = enemyToShoot?.transform.position.x < transform.position.x;
 
-            if (timeUntilNextShot <= 0) {
+            if (timeUntilNextShot <= 0)
+            {
                 timeUntilNextShot = GetComputedCooldownTime();
                 GetComponent<SpriteRenderer>().sprite = attackingSprite;
                 Projectile projectile = Instantiate(projectilePrefab, transform);
                 projectile.tower = this;
                 projectile.targetedEnemy = enemyToShoot;
             }
-            else if (timeUntilNextShot <= cooldownTime/2 && projectilePrefab.projectileType == ProjectileType.Shoot) {
+            else if (timeUntilNextShot <= cooldownTime / 2 && projectilePrefab.projectileType == ProjectileType.Shoot)
+            {
                 GetComponent<SpriteRenderer>().sprite = idleSprite;
             }
         }
 
-        if (timeUntilNextShot <= cooldownTime / 2 && projectilePrefab.projectileType == ProjectileType.Shoot && GetComponent<SpriteRenderer>().sprite != idleSprite)
+        if (timeUntilNextShot <= cooldownTime / 2 && projectilePrefab.projectileType == ProjectileType.Shoot &&
+            GetComponent<SpriteRenderer>().sprite != idleSprite)
         {
             GetComponent<SpriteRenderer>().sprite = idleSprite;
         }

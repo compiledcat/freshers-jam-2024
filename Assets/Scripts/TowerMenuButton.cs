@@ -9,15 +9,22 @@ public class TowerMenuButton : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public Tower TowerPrefab;
 
+    [SerializeField] private TooltipTrigger _tooltipTrigger;
+
     private Camera _cam;
-    
+
     private Vector3 _initialDragPos;
 
-    private void Awake()
+    private void Start()
     {
         _cam = Camera.main;
+        
+        _tooltipTrigger.text = $"{TowerPrefab.name}  <size=70%>Tower (${TowerPrefab.cost})</size>\n\n" +
+                               $"Range: {TowerPrefab.shootingRange}m\n" +
+                               $"Cooldown: {TowerPrefab.GetComputedCooldownTime()}s\n" +
+                               $"Damage: {TowerPrefab.projectileDamage}";
     }
-    
+
     private void OnValidate()
     {
         if (Image == null)
@@ -28,6 +35,11 @@ public class TowerMenuButton : MonoBehaviour, IPointerDownHandler, IDragHandler,
         if (Button == null)
         {
             Button = GetComponent<Button>();
+        }
+        
+        if (_tooltipTrigger == null)
+        {
+            _tooltipTrigger = GetComponent<TooltipTrigger>();
         }
     }
 
@@ -52,6 +64,8 @@ public class TowerMenuButton : MonoBehaviour, IPointerDownHandler, IDragHandler,
         if (raycastHit && raycastHit.transform.TryGetComponent<TowerSpot>(out var towerSpot))
         {
             if (towerSpot.Tower != null) return;
+            if (GameManager.Instance.Money < TowerPrefab.cost) return;
+            GameManager.Instance.Money -= TowerPrefab.cost;
 
             var tower = Instantiate(TowerPrefab, towerSpot.transform);
             towerSpot.Tower = tower;

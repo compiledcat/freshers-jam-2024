@@ -1,6 +1,4 @@
 using PrimeTween;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveProjectile : Projectile

@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using PrimeTween;
 using Sirenix.OdinInspector;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using Random = UnityEngine.Random;
 
 
 public enum EnemyType //From weakest to strongest - used for ShootingPriority.Strong
@@ -27,11 +23,18 @@ public class Enemy : MonoBehaviour
     [ReadOnly] public float _distanceTravelled;
 
     public EnemyType enemyType;
-    public int health;
-    public int damage;
+    [HideInInspector] public int health;
+    [HideInInspector] public int damage;
+    [HideInInspector] public float strength;
+
+    public int minHealth;
+    public int maxHealth;
+    public int minDamage;
+    public int maxDamage;
 
     private void Awake()
     {
+
         if (!_path)
         {
             _path = FindAnyObjectByType<SplineContainer>();

@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
-using UnityEngine.UIElements;
 
 
 [Serializable]
@@ -32,11 +29,12 @@ public struct WaveData
 
 public class RoundManager : MonoBehaviour
 {
-    [SerializeField] private GameObject enemy_prefab;
+    [SerializeField] private List<GameObject> enemy_prefabs;
 
     public List<RoundData> rounds;
     public float timeBetweenRounds; //In seconds
     public int currentRound;
+    public int currentScene;
 
     [SerializeField] private int roundsPerScene;
     [SerializeField] private CameraMovement cameraMovement;
@@ -71,7 +69,9 @@ public class RoundManager : MonoBehaviour
                 while (currentEnemy < rounds[currentRound].waves[currentWave].enemies.Count)
                 {
                     //Debug.Log("Spawning enemy.");
-                    Instantiate(rounds[currentRound].waves[currentWave].enemies[currentEnemy]);
+                    //Instantiate(rounds[currentRound].waves[currentWave].enemies[currentEnemy]);
+
+                    Instantiate(enemy_prefabs[currentScene]);
                     currentEnemy += 1;
                     yield return new WaitForSeconds(rounds[currentRound].waves[currentWave].timeBetweenEnemies);
                 }
@@ -103,6 +103,7 @@ public class RoundManager : MonoBehaviour
                 if (currentRound % roundsPerScene == 0 && currentRound > 0)
                 {
                     cameraMovement.AdvanceScene();
+                    currentScene++;
                     yield return new WaitForSeconds(timeBetweenRounds + cameraMovement.advancementTimeForNextScene);
                 }
                 else

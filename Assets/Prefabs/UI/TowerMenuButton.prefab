@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5037463962762591610}
   - component: {fileID: 2164361460109326452}
   - component: {fileID: -4264161160801075998}
+  - component: {fileID: 8940588203832399502}
   m_Layer: 5
   m_Name: TowerMenuButton
   m_TagString: Untagged
@@ -136,3 +137,16 @@ MonoBehaviour:
   Image: {fileID: 5037463962762591610}
   Button: {fileID: 2164361460109326452}
   TowerPrefab: {fileID: 0}
+--- !u!114 &8940588203832399502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2210252174713972353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb887d5787f4e28b338e3735cd56601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: 
