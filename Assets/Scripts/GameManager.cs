@@ -5,8 +5,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public int maxHealth = 20;
     public int health;
-    
-    [SerializeField] private SpriteRenderer queenFrog;
+    public int currentLevel = 0;
+
+    public SpriteRenderer queenFrog;
     [SerializeField] private Sprite idleFrogSprite;
     [SerializeField] private Sprite hurtFrogSprite;
     [SerializeField] private Sprite deadFrogSprite;
@@ -15,11 +16,23 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
         health = maxHealth;
-        Instance = this;
         Money = 25;
     }
-    
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
     private void Update()
     {
 #if UNITY_EDITOR
