@@ -104,6 +104,11 @@ MonoBehaviour:
   enemyType: 0
   health: 1
   damage: 1
+  strength: 0
+  minHealth: 1
+  maxHealth: 3
+  minDamage: 1
+  maxDamage: 2
 --- !u!70 &-334261725136660472
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

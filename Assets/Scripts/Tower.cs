@@ -78,7 +78,6 @@ public class Tower : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(projectileDamage);
         Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         List<Enemy> enemiesInRange = enemies
             .Where(e => Vector3.Distance(transform.position, e.transform.position) <= shootingRange).ToList();
