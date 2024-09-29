@@ -5,6 +5,7 @@ public class WaterTiler : MonoBehaviour
 {
     [SerializeField] private RawImage _rawImage;
     private Camera _cam;
+    private float _speed = 0.05f;
 
     private void Awake()
     {
@@ -17,8 +18,8 @@ public class WaterTiler : MonoBehaviour
         
         // offset over time
         var offset = _rawImage.uvRect.position;
-        offset.x += Time.deltaTime * 0.1f;
-        offset.y += Time.deltaTime * 0.1f;
+        offset.x += Time.deltaTime * _speed;
+        offset.y += Time.deltaTime * _speed;
         _rawImage.uvRect = new Rect(offset, _rawImage.uvRect.size);
     }
     
