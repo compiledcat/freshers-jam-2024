@@ -150,10 +150,12 @@ public class Tower : MonoBehaviour
         projectile.targetedEnemy = enemy;
     }
 
+#if UNITY_EDITOR
     [Conditional("UNITY_EDITOR")]
     private void OnDrawGizmosSelected()
     {
         UnityEditor.Handles.color = new Color(1.0f, 0.6f, 0.6f, 0.5f);
         UnityEditor.Handles.DrawSolidDisc(transform.position, Vector3.forward, shootingRange);
     }
+#endif
 }
