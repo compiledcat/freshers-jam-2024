@@ -41,7 +41,7 @@ public class TowerUpgradeTooltip : MonoBehaviour
     public List<Sprite> SpriteLevels = new();
 
     private const int CostPerLevel = 5;
-    private const int MaxLevel = 5;
+    private const int MaxLevel = 6;
 
     private void OnValidate()
     {
@@ -61,7 +61,7 @@ public class TowerUpgradeTooltip : MonoBehaviour
         {
             upgrade.PurchaseButton.onClick.AddListener(() =>
             {
-                if (upgrade.Level >= MaxLevel)
+                if (upgrade.Level >= MaxLevel || GameManager.Instance.Money < CostPerLevel * upgrade.Level)
                 {
                     return;
                 }
@@ -69,7 +69,7 @@ public class TowerUpgradeTooltip : MonoBehaviour
                 GameManager.Instance.Money -= CostPerLevel * upgrade.Level;
 
                 upgrade.Level++;
-                upgrade.Bar.sprite = SpriteLevels[upgrade.Level];
+                upgrade.Bar.sprite = SpriteLevels[upgrade.Level-1];
 
                 upgrade.CostText.text = upgrade.Level == MaxLevel ? "MAX" : $"{CostPerLevel * upgrade.Level}";
                 upgrade.OnUpgrade.Invoke();
