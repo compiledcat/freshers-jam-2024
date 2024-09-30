@@ -64,7 +64,7 @@ public class WorldMap : MonoBehaviour
     }
 
     // lerps the camera from start to end (where each represents a boundary of the scene) with t as the lerp value
-    private void LerpCam(int start, int end)
+    private void LerpCam(int start, int end, bool loadScene = false)
     {
         //float normal_aspect = 1920 / 1080f;
         /*if (cam.aspect > normal_aspect) // wider
@@ -81,6 +81,7 @@ public class WorldMap : MonoBehaviour
             .ChainDelay(1f)
             .Group(Tween.Position(cam.transform, scenePositions[end].position.position - Vector3.forward * 10, advancementTimeForNextScene, ease: Ease.InOutCubic))
             .Group(Tween.CameraOrthographicSize(cam, scenePositions[end].maxSize.y, advancementTimeForNextScene, ease: Ease.InOutCubic))
+            .OnComplete(() => { if (loadScene) { SceneManager.LoadScene("Level" + end.ToString()); } });
             ;
     }
 

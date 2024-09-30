@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Splines;
-using UnityEngine.Splines.Interpolators;
 
 
 [Serializable]
@@ -40,12 +40,11 @@ public struct WaveData
 
 public class RoundManager : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> enemy_prefabs;
+    [SerializeField] private GameObject enemy_prefab;
 
     private List<RoundData> rounds;
     public float timeBetweenRounds; //In seconds
     public int currentRound;
-    public int currentScene;
 
     [SerializeField] private int roundsPerScene;
     [SerializeField] private CameraMovement cameraMovement;
@@ -111,7 +110,7 @@ public class RoundManager : MonoBehaviour
                     //Debug.Log("Spawning enemy.");
                     //Instantiate(rounds[currentRound].waves[currentWave].enemies[currentEnemy]);
 
-                    Enemy enemy = Instantiate(enemy_prefabs[currentScene]).GetComponent<Enemy>();
+                    Enemy enemy = Instantiate(enemy_prefab).GetComponent<Enemy>();
                     enemy.health = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
                     enemy.damage = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
                     enemy.strength = enemy.health + enemy.damage * 2;
@@ -150,9 +149,8 @@ public class RoundManager : MonoBehaviour
                 //Check if camera has to advance to next scene, if so, add the time it takes for the camera to move to the delay between rounds
                 if (currentRound % roundsPerScene == 0 && currentRound > 0)
                 {
-                    cameraMovement.AdvanceScene();
-                    currentScene++;
                     yield return new WaitForSeconds(timeBetweenRounds + cameraMovement.advancementTimeForNextScene);
+                    SceneManager.LoadScene("TransitionScene");
                 }
                 else
                 {
