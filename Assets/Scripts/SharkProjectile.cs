@@ -22,6 +22,6 @@ public class SharkProjectile : Projectile
         .ChainDelay(.5f)
         .Group(Tween.PositionY(transform, transform.position.y - 1.28f, 1f / tower.projectileSpeed))
         .Group(Tween.MaterialProperty(spriteRenderer.material, Shader.PropertyToID("_fadeInY"), 1, 0.75f / tower.projectileSpeed))
-        .ChainCallback(() => { Destroy(gameObject); ((SharkTower)tower).ReturnPosition(); });
+        .ChainCallback(() => { Destroy(gameObject); if(tower) ((SharkTower)tower).ReturnPosition(); });
     }
 }

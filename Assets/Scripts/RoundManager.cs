@@ -76,7 +76,7 @@ public class RoundManager : MonoBehaviour
             rounds.Add(round);
         }
 
-        Debug.Log(rounds.Count);
+        Debug.Log($"Queued {rounds.Count} rounds");
         StartCoroutine(PlayGame());
     }
 

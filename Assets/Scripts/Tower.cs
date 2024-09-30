@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 public enum ShootingPriority
@@ -156,12 +152,12 @@ public class Tower : MonoBehaviour
         timeUntilNextShot = GetComputedCooldownTime();
         GetComponent<SpriteRenderer>().sprite = attackingSprite;
         Projectile projectile = Instantiate(projectilePrefab, transform);
+        projectile.transform.parent = null;
         projectile.tower = this;
         projectile.targetedEnemy = enemy;
     }
 
 #if UNITY_EDITOR
-    [Conditional("UNITY_EDITOR")]
     private void OnDrawGizmosSelected()
     {
         UnityEditor.Handles.color = new Color(1.0f, 0.6f, 0.6f, 0.5f);

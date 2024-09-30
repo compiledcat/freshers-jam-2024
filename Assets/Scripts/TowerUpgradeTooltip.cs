@@ -133,6 +133,7 @@ public class TowerUpgradeTooltip : MonoBehaviour
         {
             GameManager.Instance.Money += Mathf.FloorToInt(Tower.InvestedValue / 2f);
             Tween.Scale(Tower.transform, Vector3.zero, 0.2f, Ease.InBack).OnComplete(() => Destroy(Tower.gameObject));
+
             Destroy(gameObject);
         });
     }
