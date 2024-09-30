@@ -47,7 +47,6 @@ public class Tower : MonoBehaviour
 
     protected virtual void Awake()
     {
-
         startingProjectileDamage = projectileDamage;
         startingProjectileSpeed = projectileSpeed;
         startingShootingRange = shootingRange;
@@ -61,9 +60,18 @@ public class Tower : MonoBehaviour
         _towerUpgradeTooltip = Instantiate(_towerUpgradeTooltipPrefab, _canvas.transform);
         _towerUpgradeTooltip.Tower = this;
 
-        _towerUpgradeTooltip.DamageUpgrade.OnUpgrade.AddListener(() => { projectileDamage = startingProjectileDamage + _towerUpgradeTooltip.DamageUpgrade.Level; });
-        _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() => { shootingRange = startingProjectileSpeed + _towerUpgradeTooltip.RangeUpgrade.Level; });
-        _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() => { projectileSpeed = startingShootingRange + _towerUpgradeTooltip.SpeedUpgrade.Level; });
+        _towerUpgradeTooltip.DamageUpgrade.OnUpgrade.AddListener(() =>
+        {
+            projectileDamage = startingProjectileDamage + _towerUpgradeTooltip.DamageUpgrade.Level;
+        });
+        _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() =>
+        {
+            shootingRange = startingShootingRange + _towerUpgradeTooltip.RangeUpgrade.Level;
+        });
+        _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() =>
+        {
+            projectileSpeed = startingProjectileSpeed + _towerUpgradeTooltip.SpeedUpgrade.Level;
+        });
     }
 
     public void OnMouseDown()

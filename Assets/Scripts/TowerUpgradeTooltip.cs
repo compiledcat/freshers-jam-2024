@@ -55,6 +55,7 @@ public class TowerUpgradeTooltip : MonoBehaviour
     {
         _cam = Camera.main;
         _canvasGroup.alpha = 0;
+        _canvasGroup.blocksRaycasts = false;
 
         var upgrades = new List<UpgradeSet> { DamageUpgrade, RangeUpgrade, SpeedUpgrade };
         foreach (var upgrade in upgrades)
@@ -135,10 +136,12 @@ public class TowerUpgradeTooltip : MonoBehaviour
     public void Appear()
     {
         Tween.Alpha(_canvasGroup, 1, 0.2f, Ease.InOutCubic);
+        _canvasGroup.blocksRaycasts = true;
     }
 
     public void Disappear()
     {
         Tween.Alpha(_canvasGroup, 0, 0.2f, Ease.InOutCubic);
+        _canvasGroup.blocksRaycasts = false;
     }
 }
