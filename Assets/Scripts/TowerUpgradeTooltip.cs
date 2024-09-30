@@ -70,7 +70,7 @@ public class TowerUpgradeTooltip : MonoBehaviour
                 GameManager.Instance.Money -= CostPerLevel * upgrade.Level;
 
                 upgrade.Level++;
-                upgrade.Bar.sprite = SpriteLevels[upgrade.Level-1];
+                upgrade.Bar.sprite = SpriteLevels[upgrade.Level - 1];
 
                 upgrade.CostText.text = upgrade.Level == MaxLevel ? "MAX" : $"{CostPerLevel * upgrade.Level}";
                 upgrade.OnUpgrade.Invoke();
@@ -124,13 +124,19 @@ public class TowerUpgradeTooltip : MonoBehaviour
     {
         // Set pivot based on screen position of tower
         var rectTransform = (RectTransform)transform;
-        var pivot = _cam.WorldToScreenPoint(Tower.transform.position).x < Screen.width / 2f
-            ? new Vector2(0f, 0.5f)
-            : new Vector2(1f, 0.5f);
+
+        var towerPos = _cam.WorldToScreenPoint(Tower.transform.position);
+        var pivot = towerPos.x < Screen.width / 2f
+            ? towerPos.y < Screen.height / 2f
+                ? new Vector2(0, 0)
+                : new Vector2(0, 1)
+            : towerPos.y < Screen.height / 2f
+                ? new Vector2(1, 0)
+                : new Vector2(1, 1);
 
         rectTransform.pivot = pivot;
 
-        transform.position = _cam.WorldToScreenPoint(Tower.transform.position);
+        transform.position = towerPos;
     }
 
     public void Appear()
