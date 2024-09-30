@@ -843,7 +843,7 @@ GameObject:
   - component: {fileID: 1036895647}
   - component: {fileID: 1036895651}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: WaterCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
