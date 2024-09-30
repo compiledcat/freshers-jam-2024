@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour
             Tween.Scale(transform, 0f, 0.5f, Ease.InBack).OnComplete(() => Destroy(gameObject));
 
             enabled = false;
+            Destroy(GetComponent<Collider2D>()); // cant get hit if we're already ""dead""
         }
     }
 
