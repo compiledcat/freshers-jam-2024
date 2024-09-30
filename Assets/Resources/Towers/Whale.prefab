@@ -106,6 +106,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1737230609456880476, guid: b33aa54f6c024644aa18d67ad0aab598, type: 3}
   projectileSpeed: 20
   projectileDamage: 3
+  cost: 80
+  InvestedValue: 0
 --- !u!61 &-236242896754685963
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -149,5 +151,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 4, y: 4}
   m_EdgeRadius: 0

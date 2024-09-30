@@ -174,6 +174,8 @@ public class TowerUpgradeTooltip : MonoBehaviour
                 tooltip.Disappear();
             }
         }
+        
+        Tower.BorderRenderer.enabled = true;
     }
 
     public void Disappear()
@@ -183,5 +185,7 @@ public class TowerUpgradeTooltip : MonoBehaviour
         Tween.Alpha(_canvasGroup, 0, 0.2f, Ease.InOutCubic);
         Tween.Scale(transform, Vector3.zero, 0.2f, Ease.InBack);
         _canvasGroup.blocksRaycasts = false;
+        
+        Tower.BorderRenderer.enabled = false;
     }
 }

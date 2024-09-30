@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using PrimeTween;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -21,6 +22,8 @@ public class Tower : MonoBehaviour
 
     public float cooldownTime;
     private float timeUntilNextShot;
+
+    public LineRenderer BorderRenderer;
 
     public float GetComputedCooldownTime() => projectilePrefab.projectileType == ProjectileType.Shoot
         ? cooldownTime
@@ -46,7 +49,7 @@ public class Tower : MonoBehaviour
     protected virtual void Awake()
     {
         name = name.Replace("(Clone)", ""); // yuck
-        
+
         startingProjectileDamage = projectileDamage;
         startingProjectileSpeed = projectileSpeed;
         startingShootingRange = shootingRange;
@@ -66,19 +69,50 @@ public class Tower : MonoBehaviour
         });
         _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() =>
         {
+            var originalValue = shootingRange;
             shootingRange = startingShootingRange + _towerUpgradeTooltip.RangeUpgrade.Level;
+
+            // animate border renderer
+            Tween.Custom(originalValue, shootingRange, 0.5f, UpdateBorderRenderer, Ease.OutCubic);
         });
         _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() =>
         {
             projectileSpeed = startingProjectileSpeed + _towerUpgradeTooltip.SpeedUpgrade.Level;
         });
-        
+
         InvestedValue = cost;
+
+        // Setup border renderer
+        BorderRenderer = gameObject.AddComponent<LineRenderer>();
+        BorderRenderer.positionCount = 64;
+        BorderRenderer.useWorldSpace = false;
+        BorderRenderer.startWidth = BorderRenderer.endWidth = 0.05f;
+        BorderRenderer.loop = true;
+        BorderRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        BorderRenderer.startColor = BorderRenderer.endColor = Color.white;
+        BorderRenderer.enabled = false;
+
+        UpdateBorderRenderer();
     }
 
     public void OnMouseDown()
     {
         _towerUpgradeTooltip.Appear();
+    }
+
+    public void UpdateBorderRenderer(float range = 0)
+    {
+        if (range == 0)
+        {
+            range = shootingRange;
+        }
+
+        for (var i = 0; i < BorderRenderer.positionCount; i++)
+        {
+            var angle = i * Mathf.PI * 2 / BorderRenderer.positionCount;
+            var pos = new Vector3(Mathf.Cos(angle) * range, Mathf.Sin(angle) * range, 0);
+            BorderRenderer.SetPosition(i, pos);
+        }
     }
 
     public void SetTargetingMode(ShootingPriority priority)
