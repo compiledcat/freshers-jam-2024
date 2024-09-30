@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class TowerMenuButton : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public Image Image;
     public Button Button;
 
-    public Tower TowerPrefab;
+    [ReadOnly] public Tower TowerPrefab;
 
     [SerializeField] private TooltipTrigger _tooltipTrigger;
 
@@ -18,7 +19,7 @@ public class TowerMenuButton : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private void Start()
     {
         _cam = Camera.main;
-        
+
         _tooltipTrigger.text = $"{TowerPrefab.name}  <size=70%>Tower (${TowerPrefab.cost})</size>\n\n" +
                                $"Range: {TowerPrefab.shootingRange}m\n" +
                                $"Cooldown: {TowerPrefab.GetComputedCooldownTime()}s\n" +
@@ -36,7 +37,7 @@ public class TowerMenuButton : MonoBehaviour, IPointerDownHandler, IDragHandler,
         {
             Button = GetComponent<Button>();
         }
-        
+
         if (_tooltipTrigger == null)
         {
             _tooltipTrigger = GetComponent<TooltipTrigger>();

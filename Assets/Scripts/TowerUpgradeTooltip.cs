@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PrimeTween;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,10 +20,12 @@ public class UpgradeSet
 
 public class TowerUpgradeTooltip : MonoBehaviour
 {
-    public Tower Tower;
+    [ReadOnly] public Tower Tower;
 
     [SerializeField] private CanvasGroup _canvasGroup;
     private Camera _cam;
+
+    [SerializeField] private TextMeshProUGUI _nameText;
 
     [SerializeField] private Button _firstModeButton;
     [SerializeField] private Button _lastModeButton;
@@ -135,8 +138,9 @@ public class TowerUpgradeTooltip : MonoBehaviour
                 : new Vector2(1, 1);
 
         rectTransform.pivot = pivot;
-
         transform.position = towerPos;
+
+        _nameText.text = $"{Tower.name}  <size=70%>Tower</size>";
     }
 
     public void Appear()

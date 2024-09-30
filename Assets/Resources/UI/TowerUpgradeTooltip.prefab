@@ -1874,6 +1874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Tower: {fileID: 0}
   _canvasGroup: {fileID: 810981378636288350}
+  _nameText: {fileID: 8702918796833292365}
   _firstModeButton: {fileID: 8661671160450750403}
   _lastModeButton: {fileID: 7240722318250537649}
   _strongModeButton: {fileID: 2756115739191151655}

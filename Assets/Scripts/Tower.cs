@@ -47,6 +47,8 @@ public class Tower : MonoBehaviour
 
     protected virtual void Awake()
     {
+        name = name.Replace("(Clone)", ""); // yuck
+        
         startingProjectileDamage = projectileDamage;
         startingProjectileSpeed = projectileSpeed;
         startingShootingRange = shootingRange;
