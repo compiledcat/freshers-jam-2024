@@ -120,11 +120,7 @@ public class Tower : MonoBehaviour
 
             if (timeUntilNextShot <= 0)
             {
-                timeUntilNextShot = GetComputedCooldownTime();
-                GetComponent<SpriteRenderer>().sprite = attackingSprite;
-                Projectile projectile = Instantiate(projectilePrefab, transform);
-                projectile.tower = this;
-                projectile.targetedEnemy = enemyToShoot;
+                Attack(enemyToShoot);
             }
             else if (timeUntilNextShot <= cooldownTime / 2 && projectilePrefab.projectileType == ProjectileType.Shoot)
             {
