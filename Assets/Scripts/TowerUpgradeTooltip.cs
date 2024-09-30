@@ -147,6 +147,15 @@ public class TowerUpgradeTooltip : MonoBehaviour
     {
         Tween.Alpha(_canvasGroup, 1, 0.2f, Ease.InOutCubic);
         _canvasGroup.blocksRaycasts = true;
+
+        var allTooltips = FindObjectsByType<TowerUpgradeTooltip>(FindObjectsSortMode.None);
+        foreach (var tooltip in allTooltips)
+        {
+            if (tooltip != this)
+            {
+                tooltip.Disappear();
+            }
+        }
     }
 
     public void Disappear()
