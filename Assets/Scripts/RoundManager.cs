@@ -87,11 +87,11 @@ public class RoundManager : MonoBehaviour
 
     float StrengthToScale(float strength, float maxStrength)
     {
-        Debug.Log("");
-        Debug.Log(strength);
-        Debug.Log(maxStrength);
-        Debug.Log(Mathf.Lerp(0.5f, 2.0f, strength / maxStrength));
-        Debug.Log("");
+        // Debug.Log("");
+        // Debug.Log(strength);
+        // Debug.Log(maxStrength);
+        // Debug.Log(Mathf.Lerp(0.5f, 2.0f, strength / maxStrength));
+        // Debug.Log("");
         return Mathf.Lerp(0.5f, 2.0f, strength / maxStrength);
     }
 

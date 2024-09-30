@@ -37,6 +37,8 @@ public class TowerUpgradeTooltip : MonoBehaviour
     private TextMeshProUGUI _strongModeText;
     private TextMeshProUGUI _closeModeText;
 
+    [SerializeField] private Button _sellButton;
+
     public UpgradeSet DamageUpgrade;
     public UpgradeSet RangeUpgrade;
     public UpgradeSet SpeedUpgrade;
@@ -59,23 +61,28 @@ public class TowerUpgradeTooltip : MonoBehaviour
         _cam = Camera.main;
         _canvasGroup.alpha = 0;
         _canvasGroup.blocksRaycasts = false;
+        transform.localScale = Vector3.zero;
 
         var upgrades = new List<UpgradeSet> { DamageUpgrade, RangeUpgrade, SpeedUpgrade };
         foreach (var upgrade in upgrades)
         {
             upgrade.PurchaseButton.onClick.AddListener(() =>
             {
-                if (upgrade.Level >= MaxLevel || GameManager.Instance.Money < CostPerLevel * upgrade.Level)
+                var upgradeCost = CostPerLevel * upgrade.Level;
+                if (upgrade.Level >= MaxLevel || GameManager.Instance.Money < upgradeCost)
                 {
                     return;
                 }
 
                 GameManager.Instance.Money -= CostPerLevel * upgrade.Level;
+                Tower.InvestedValue += upgradeCost;
 
                 upgrade.Level++;
                 upgrade.Bar.sprite = SpriteLevels[upgrade.Level - 1];
 
-                upgrade.CostText.text = upgrade.Level == MaxLevel ? "MAX" : $"{CostPerLevel * upgrade.Level}";
+                var newUpgradeCost = CostPerLevel * upgrade.Level;
+                upgrade.CostText.text = upgrade.Level == MaxLevel ? "MAX" : $"{newUpgradeCost}";
+
                 upgrade.OnUpgrade.Invoke();
             });
         }
@@ -121,6 +128,13 @@ public class TowerUpgradeTooltip : MonoBehaviour
             _strongModeText.fontStyle = FontStyles.Normal;
             _closeModeText.fontStyle = FontStyles.Bold;
         });
+
+        _sellButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.Money += Mathf.FloorToInt(Tower.InvestedValue / 2f);
+            Tween.Scale(Tower.transform, Vector3.zero, 0.2f, Ease.InBack).OnComplete(() => Destroy(Tower.gameObject));
+            Destroy(gameObject);
+        });
     }
 
     private void Start()
@@ -145,7 +159,10 @@ public class TowerUpgradeTooltip : MonoBehaviour
 
     public void Appear()
     {
+        if (_canvasGroup.blocksRaycasts) return; // already open
+        
         Tween.Alpha(_canvasGroup, 1, 0.2f, Ease.InOutCubic);
+        Tween.Scale(transform, Vector3.one, 0.2f, Ease.OutBack);
         _canvasGroup.blocksRaycasts = true;
 
         var allTooltips = FindObjectsByType<TowerUpgradeTooltip>(FindObjectsSortMode.None);
@@ -160,7 +177,10 @@ public class TowerUpgradeTooltip : MonoBehaviour
 
     public void Disappear()
     {
+        if (!_canvasGroup.blocksRaycasts) return; // already closed
+        
         Tween.Alpha(_canvasGroup, 0, 0.2f, Ease.InOutCubic);
+        Tween.Scale(transform, Vector3.zero, 0.2f, Ease.InBack);
         _canvasGroup.blocksRaycasts = false;
     }
 }

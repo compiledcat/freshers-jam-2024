@@ -40,6 +40,8 @@ public class Tower : MonoBehaviour
 
     public int cost;
 
+    public int InvestedValue;
+
     private TowerUpgradeTooltip _towerUpgradeTooltipPrefab;
     private TowerUpgradeTooltip _towerUpgradeTooltip;
 
@@ -74,6 +76,8 @@ public class Tower : MonoBehaviour
         {
             projectileSpeed = startingProjectileSpeed + _towerUpgradeTooltip.SpeedUpgrade.Level;
         });
+        
+        InvestedValue = cost;
     }
 
     public void OnMouseDown()
