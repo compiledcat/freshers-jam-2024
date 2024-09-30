@@ -40,6 +40,7 @@ public struct WaveData
 
 public class RoundManager : MonoBehaviour
 {
+    public static RoundManager Instance { get; private set; }
     [SerializeField] private GameObject enemy_prefab;
 
     private List<RoundData> rounds;
@@ -50,6 +51,11 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private CameraMovement cameraMovement;
 
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+    
     private void Start()
     {
 

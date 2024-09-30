@@ -7,6 +7,7 @@ public class DataText : MonoBehaviour
     {
         BaseHealth,
         Money,
+        RoundNumber
     }
 
     [SerializeField] private Value _value;
@@ -14,7 +15,7 @@ public class DataText : MonoBehaviour
 
     [SerializeField] private string _prefix;
     [SerializeField] private string _suffix;
-    
+
     private void OnValidate()
     {
         if (!_text)
@@ -25,14 +26,14 @@ public class DataText : MonoBehaviour
 
     private void LateUpdate()
     {
-        switch (_value)
+        var value = _value switch
         {
-            case Value.BaseHealth:
-                _text.text = $"{_prefix}{GameManager.Instance.health}{_suffix}";
-                break;
-            case Value.Money:
-                _text.text = $"{_prefix}{GameManager.Instance.Money}{_suffix}";
-                break;
-        }
+            Value.BaseHealth => GameManager.Instance.health,
+            Value.Money => GameManager.Instance.Money,
+            Value.RoundNumber => RoundManager.Instance.currentRound + 1, // todo why are we 0 indexing rounds
+            _ => 0
+        };
+
+        _text.text = $"{_prefix}{value}{_suffix}";
     }
 }
