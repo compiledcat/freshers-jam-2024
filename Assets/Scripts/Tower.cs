@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 public enum ShootingPriority
@@ -40,6 +36,8 @@ public class Tower : MonoBehaviour
 
     public int cost;
 
+    public int InvestedValue;
+
     private TowerUpgradeTooltip _towerUpgradeTooltipPrefab;
     private TowerUpgradeTooltip _towerUpgradeTooltip;
 
@@ -47,7 +45,8 @@ public class Tower : MonoBehaviour
 
     protected virtual void Awake()
     {
-
+        name = name.Replace("(Clone)", ""); // yuck
+        
         startingProjectileDamage = projectileDamage;
         startingProjectileSpeed = projectileSpeed;
         startingShootingRange = shootingRange;
@@ -61,9 +60,20 @@ public class Tower : MonoBehaviour
         _towerUpgradeTooltip = Instantiate(_towerUpgradeTooltipPrefab, _canvas.transform);
         _towerUpgradeTooltip.Tower = this;
 
-        _towerUpgradeTooltip.DamageUpgrade.OnUpgrade.AddListener(() => { projectileDamage = startingProjectileDamage + _towerUpgradeTooltip.DamageUpgrade.Level; });
-        _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() => { shootingRange = startingProjectileSpeed + _towerUpgradeTooltip.RangeUpgrade.Level; });
-        _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() => { projectileSpeed = startingShootingRange + _towerUpgradeTooltip.SpeedUpgrade.Level; });
+        _towerUpgradeTooltip.DamageUpgrade.OnUpgrade.AddListener(() =>
+        {
+            projectileDamage = startingProjectileDamage + _towerUpgradeTooltip.DamageUpgrade.Level;
+        });
+        _towerUpgradeTooltip.RangeUpgrade.OnUpgrade.AddListener(() =>
+        {
+            shootingRange = startingShootingRange + _towerUpgradeTooltip.RangeUpgrade.Level;
+        });
+        _towerUpgradeTooltip.SpeedUpgrade.OnUpgrade.AddListener(() =>
+        {
+            projectileSpeed = startingProjectileSpeed + _towerUpgradeTooltip.SpeedUpgrade.Level;
+        });
+        
+        InvestedValue = cost;
     }
 
     public void OnMouseDown()
@@ -142,12 +152,12 @@ public class Tower : MonoBehaviour
         timeUntilNextShot = GetComputedCooldownTime();
         GetComponent<SpriteRenderer>().sprite = attackingSprite;
         Projectile projectile = Instantiate(projectilePrefab, transform);
+        projectile.transform.parent = null;
         projectile.tower = this;
         projectile.targetedEnemy = enemy;
     }
 
 #if UNITY_EDITOR
-    [Conditional("UNITY_EDITOR")]
     private void OnDrawGizmosSelected()
     {
         UnityEditor.Handles.color = new Color(1.0f, 0.6f, 0.6f, 0.5f);

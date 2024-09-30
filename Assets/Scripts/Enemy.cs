@@ -34,15 +34,17 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-
         if (!_path)
         {
             _path = FindAnyObjectByType<SplineContainer>();
         }
 
-        Tween.Scale(transform, 1.05f, 1f, Ease.InOutQuad, cycleMode: CycleMode.Yoyo, cycles: -1);
-
         MoveAlongPath();
+    }
+
+    private void Start()
+    {
+        Tween.Scale(transform, 1.05f * transform.localScale, 1f, Ease.InOutQuad, cycleMode: CycleMode.Yoyo, cycles: -1);
     }
 
     private void LateUpdate()
@@ -69,6 +71,7 @@ public class Enemy : MonoBehaviour
             Tween.Scale(transform, 0f, 0.5f, Ease.InBack).OnComplete(() => Destroy(gameObject));
 
             enabled = false;
+            Destroy(GetComponent<Collider2D>()); // cant get hit if we're already ""dead""
         }
     }
 

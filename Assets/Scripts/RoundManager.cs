@@ -37,9 +37,9 @@ public struct WaveData
 }
 
 
-
 public class RoundManager : MonoBehaviour
 {
+    public static RoundManager Instance { get; private set; }
     [SerializeField] private GameObject enemy_prefab;
 
     private List<RoundData> rounds;
@@ -50,43 +50,49 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private CameraMovement cameraMovement;
 
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
-
         FindObjectOfType<SplineContainer>().transform.localScale = new Vector3(1, 1, 0);
 
         currentRound = 0;
         timeBetweenRounds = 3.0f;
 
         rounds = new List<RoundData>();
-        
-        for (int i=0; i<roundsPerScene*3; i++)
+
+        for (int i = 0; i < roundsPerScene * 3; i++)
         {
-            Debug.Log(i);
             int numWaves = UnityEngine.Random.Range(3, 10);
             RoundData round = new RoundData(null, null);
-            for (int k = 0; k < numWaves; k++) {
+            for (int k = 0; k < numWaves; k++)
+            {
                 round.waves.Add(new WaveData(UnityEngine.Random.Range(5, 25), UnityEngine.Random.Range(0.25f, 3.0f)));
             }
+
             rounds.Add(round);
         }
-        Debug.Log(rounds.Count);
+
+        Debug.Log($"Queued {rounds.Count} rounds");
         StartCoroutine(PlayGame());
     }
 
 
     Color StrengthToColor(float strength, float maxStrength)
     {
-        return Color.Lerp(Color.green, Color.red, strength/maxStrength);
+        return Color.Lerp(Color.green, Color.red, strength / maxStrength);
     }
 
     float StrengthToScale(float strength, float maxStrength)
     {
-        Debug.Log("");
-        Debug.Log(strength);
-        Debug.Log(maxStrength);
-        Debug.Log(Mathf.Lerp(0.5f, 2.0f, strength / maxStrength));
-        Debug.Log("");
+        // Debug.Log("");
+        // Debug.Log(strength);
+        // Debug.Log(maxStrength);
+        // Debug.Log(Mathf.Lerp(0.5f, 2.0f, strength / maxStrength));
+        // Debug.Log("");
         return Mathf.Lerp(0.5f, 2.0f, strength / maxStrength);
     }
 
@@ -97,12 +103,12 @@ public class RoundManager : MonoBehaviour
         //Loop through all rounds in game
         while (currentRound < rounds.Count)
         {
-            Debug.Log("STARTING ROUND.");
+            Debug.Log($"Starting round {currentRound}");
             //Loop through all waves in round
             int currentWave = 0;
             while (currentWave < rounds[currentRound].waves.Count)
             {
-                Debug.Log("Starting wave.");
+                Debug.Log($"Starting wave {currentWave}");
                 //Loop through all enemies in wave
                 int currentEnemy = 0;
                 while (currentEnemy < rounds[currentRound].waves[currentWave].numEnemies)
@@ -142,7 +148,7 @@ public class RoundManager : MonoBehaviour
 
             //Only go to next round if all enemies are dead
             yield return new WaitUntil(() => FindObjectOfType<Enemy>() == null);
-            
+
             //ugly code pls help me jowsey (from ava :p)
             if (currentRound < rounds.Count)
             {

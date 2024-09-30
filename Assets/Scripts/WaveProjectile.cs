@@ -8,6 +8,8 @@ public class WaveProjectile : Projectile
     [SerializeField] SpriteRenderer spriteRenderer;
     Tween fade;
 
+    private Vector3 startPos;
+
     protected override void Start()
     {
         base.Start();
@@ -19,13 +21,27 @@ public class WaveProjectile : Projectile
     {
         base.Update();
 
-        bone1.localPosition -= transform.up * separateSpeed * Time.deltaTime;
-        bone2.localPosition += transform.up * separateSpeed * Time.deltaTime;
+        bone1.localPosition -= transform.up * (separateSpeed * Time.deltaTime);
+        bone2.localPosition += transform.up * (separateSpeed * Time.deltaTime);
         bone1.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime);
         bone2.Rotate(Vector3.forward, -rotateSpeed * Time.deltaTime);
+
+        if (!tower)
+        {
+            if (!fade.isAlive)
+            {
+                fade = Tween.MaterialProperty(spriteRenderer.material, Shader.PropertyToID("_fadeOutY"), 1, 0.1f)
+                    .OnComplete(() => Destroy(gameObject));
+            }
+
+            return;
+        }
+
         if (Vector3.Distance(transform.position, tower.transform.position) > (range - fadeDist / 2) && !fade.isAlive)
         {
-            fade = Tween.MaterialProperty(spriteRenderer.material, Shader.PropertyToID("_fadeOutY"), 1, fadeDist / tower.projectileSpeed).OnComplete(() => Destroy(gameObject));
+            fade = Tween.MaterialProperty(spriteRenderer.material, Shader.PropertyToID("_fadeOutY"), 1,
+                    fadeDist / tower.projectileSpeed)
+                .OnComplete(() => Destroy(gameObject));
         }
     }
 }

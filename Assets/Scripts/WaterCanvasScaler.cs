@@ -13,7 +13,7 @@ public class WaterCanvasScaler : MonoBehaviour
     [ContextMenu("Update")]
     private void Update()
     {
-        if (_cam == null) _cam = Camera.main; // for context menu item
+        if (!_cam) _cam = Camera.main; // fallback for context menu item
         _canvas.sizeDelta = new Vector2(_cam.orthographicSize * 2 * _cam.aspect, _cam.orthographicSize * 2);
     }
 
