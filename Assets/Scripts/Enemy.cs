@@ -34,15 +34,17 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-
         if (!_path)
         {
             _path = FindAnyObjectByType<SplineContainer>();
         }
 
-        Tween.Scale(transform, 1.05f, 1f, Ease.InOutQuad, cycleMode: CycleMode.Yoyo, cycles: -1);
-
         MoveAlongPath();
+    }
+
+    private void Start()
+    {
+        Tween.Scale(transform, 1.05f * transform.localScale, 1f, Ease.InOutQuad, cycleMode: CycleMode.Yoyo, cycles: -1);
     }
 
     private void LateUpdate()

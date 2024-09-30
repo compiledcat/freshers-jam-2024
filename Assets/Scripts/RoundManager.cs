@@ -58,7 +58,6 @@ public class RoundManager : MonoBehaviour
     
     private void Start()
     {
-
         FindObjectOfType<SplineContainer>().transform.localScale = new Vector3(1, 1, 0);
 
         currentRound = 0;
