@@ -48,6 +48,7 @@ public class RoundManager : MonoBehaviour
 
     [SerializeField] private int roundsPerScene;
     [SerializeField] private CameraMovement cameraMovement;
+    [SerializeField] float initialDelay;
 
 
     private void Awake()
@@ -100,6 +101,7 @@ public class RoundManager : MonoBehaviour
     //Plays all rounds in game
     IEnumerator PlayGame()
     {
+        yield return new WaitForSeconds(initialDelay);
         //Loop through all rounds in game
         while (currentRound < rounds.Count)
         {
