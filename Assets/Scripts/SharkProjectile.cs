@@ -16,12 +16,13 @@ public class SharkProjectile : Projectile
     {
         transform.position = targetedEnemy.transform.position - transform.up * 1.28f;
         Sequence.Create()
-        .Group(Tween.PositionY(transform, transform.position.y + 1.28f, 1f / tower.projectileSpeed))
-        .Group(Tween.MaterialProperty(spriteRenderer.material, Shader.PropertyToID("_fadeInY"), 0, 0.75f / tower.projectileSpeed))
-        .ChainCallback(() => { spriteRenderer.sprite = tower.idleSprite; })
-        .ChainDelay(.5f)
-        .Group(Tween.PositionY(transform, transform.position.y - 1.28f, 1f / tower.projectileSpeed))
-        .Group(Tween.MaterialProperty(spriteRenderer.material, Shader.PropertyToID("_fadeInY"), 1, 0.75f / tower.projectileSpeed))
-        .ChainCallback(() => { Destroy(gameObject); if(tower) ((SharkTower)tower).ReturnPosition(); });
+            .ChainDelay(0.5f)
+            .Chain(Tween.PositionY(transform, transform.position.y + 1.28f, 1f / tower.projectileSpeed))
+            .Group(Tween.MaterialProperty(spriteRenderer.material, Shader.PropertyToID("_fadeInY"), 0, 0.75f / tower.projectileSpeed))
+            .ChainCallback(() => { spriteRenderer.sprite = tower.idleSprite; })
+            .ChainDelay(.5f)
+            .Chain(Tween.PositionY(transform, transform.position.y - 1.28f, 1f / tower.projectileSpeed))
+            .Group(Tween.MaterialProperty(spriteRenderer.material, Shader.PropertyToID("_fadeInY"), 1, 0.75f / tower.projectileSpeed))
+            .ChainCallback(() => { Destroy(gameObject); if(tower) ((SharkTower)tower).ReturnPosition(); });
     }
 }
