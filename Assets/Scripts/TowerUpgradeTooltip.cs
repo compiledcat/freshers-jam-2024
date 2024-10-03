@@ -45,7 +45,7 @@ public class TowerUpgradeTooltip : MonoBehaviour
 
     public List<Sprite> SpriteLevels = new();
 
-    private const int CostPerLevel = 5;
+    private const int CostPerLevel = 25;
     private const int MaxLevel = 6;
 
     private void OnValidate()
