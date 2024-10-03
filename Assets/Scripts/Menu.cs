@@ -11,7 +11,7 @@ public class Menu : MonoBehaviour
 #if UNITY_WEBGL
     private void Awake()
     {
-        buttons[0].gameObject.SetActive(true);
+        Destroy(quitBtn.gameObject);
     }
 #endif
 
