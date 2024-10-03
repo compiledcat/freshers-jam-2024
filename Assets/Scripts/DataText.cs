@@ -7,7 +7,7 @@ public class DataText : MonoBehaviour
     {
         BaseHealth,
         Money,
-        RoundNumber
+        WaveNumber
     }
 
     [SerializeField] private Value _value;
@@ -30,7 +30,7 @@ public class DataText : MonoBehaviour
         {
             Value.BaseHealth => GameManager.Instance.health,
             Value.Money => GameManager.Instance.Money,
-            Value.RoundNumber => RoundManager.Instance.currentRound + 1, // todo why are we 0 indexing rounds
+            Value.WaveNumber => RoundManager.Instance.currentWave + 1, // todo why are we 0 indexing waves
             _ => 0
         };
 

@@ -17,7 +17,7 @@ public class WorldMap : MonoBehaviour
     }
 
     [SerializeField] Camera cam;
-    [SerializeField] GameObject congrats, ending, returnBtn, frog;
+    [SerializeField] GameObject congrats, ending, back, returnBtn, frog;
     [SerializeField] List<Positions> scenePositions;
     [SerializeField] private float cameraSpeed;
     [SerializeField] private int numFrogs;
@@ -25,29 +25,31 @@ public class WorldMap : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         if (GameManager.Instance.currentLevel == 2)
         {
             StartCoroutine(PlayEnding());
             return;
         }
 
-        LerpCam(GameManager.Instance.currentLevel + 1, GameManager.Instance.currentLevel + 2);
+        LerpCam(GameManager.Instance.currentLevel + 1, GameManager.Instance.currentLevel + 2, true);
         GameManager.Instance.currentLevel++;
     }
 
     private IEnumerator PlayEnding()
     {
         LerpCam(GameManager.Instance.currentLevel + 1, 0);
-        yield return new WaitForSeconds(Vector3.Distance(scenePositions[GameManager.Instance.currentLevel + 1].position.position, scenePositions[0].position.position) / cameraSpeed);
-        float timeToWait = 4f;
+        yield return new WaitForSeconds(1 + Vector3.Distance(scenePositions[GameManager.Instance.currentLevel + 1].position.position, scenePositions[0].position.position) / cameraSpeed);
+        float timeToWait = 2f;
         for (int i = 0; i < numFrogs; i++)
         {
             GameObject newFrog = Instantiate(frog, new Vector3(Random.Range(-scenePositions[0].maxSize.x, scenePositions[0].maxSize.x), Random.Range(-scenePositions[0].maxSize.y, scenePositions[0].maxSize.y), -.1f), Quaternion.Euler(0, 0, Random.Range(-10, 10)));
             newFrog.transform.localScale *= Random.Range(.25f, .4f);
             yield return new WaitForSeconds(timeToWait);
-            timeToWait *= .8f;
+            timeToWait *= .95f;
         }
         yield return new WaitForSeconds(.5f);
+        back.SetActive(true);
         ending.SetActive(true);
         yield return new WaitForSeconds(10f);
         congrats.SetActive(true);

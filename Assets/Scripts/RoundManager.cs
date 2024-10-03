@@ -42,13 +42,13 @@ public class RoundManager : MonoBehaviour
     public static RoundManager Instance { get; private set; }
     [SerializeField] private GameObject enemy_prefab;
 
-    private List<RoundData> rounds;
+    private RoundData round = new(null, null);
     public float timeBetweenRounds; //In seconds
-    public int currentRound;
+    public int currentWave;
 
-    [SerializeField] private int roundsPerScene;
-    [SerializeField] private CameraMovement cameraMovement;
+    [SerializeField] private int numWaves = 6;
     [SerializeField] float initialDelay;
+    public FadeOverTime fadeOverTime;
 
 
     private void Awake()
@@ -60,24 +60,13 @@ public class RoundManager : MonoBehaviour
     {
         FindObjectOfType<SplineContainer>().transform.localScale = new Vector3(1, 1, 0);
 
-        currentRound = 0;
         timeBetweenRounds = 3.0f;
 
-        rounds = new List<RoundData>();
-
-        for (int i = 0; i < roundsPerScene * 3; i++)
+        for (int k = 0; k < numWaves; k++)
         {
-            int numWaves = UnityEngine.Random.Range(3, 10);
-            RoundData round = new RoundData(null, null);
-            for (int k = 0; k < numWaves; k++)
-            {
-                round.waves.Add(new WaveData(UnityEngine.Random.Range(5, 25), UnityEngine.Random.Range(0.25f, 3.0f)));
-            }
-
-            rounds.Add(round);
+            round.waves.Add(new WaveData(UnityEngine.Random.Range(5 + 2 * k, 10 + 3 * k), UnityEngine.Random.Range(0.25f, 2.0f)));
         }
 
-        Debug.Log($"Queued {rounds.Count} rounds");
         StartCoroutine(PlayGame());
     }
 
@@ -102,74 +91,52 @@ public class RoundManager : MonoBehaviour
     IEnumerator PlayGame()
     {
         yield return new WaitForSeconds(initialDelay);
-        //Loop through all rounds in game
-        while (currentRound < rounds.Count)
+        //Loop through all waves
+        currentWave = 0;
+        while (currentWave < round.waves.Count)
         {
-            Debug.Log($"Starting round {currentRound}");
-            //Loop through all waves in round
-            int currentWave = 0;
-            while (currentWave < rounds[currentRound].waves.Count)
+            Debug.Log($"Starting wave {currentWave}");
+            //Loop through all enemies in wave
+            int currentEnemy = 0;
+            while (currentEnemy < round.waves[currentWave].numEnemies)
             {
-                Debug.Log($"Starting wave {currentWave}");
-                //Loop through all enemies in wave
-                int currentEnemy = 0;
-                while (currentEnemy < rounds[currentRound].waves[currentWave].numEnemies)
-                {
-                    //Debug.Log("Spawning enemy.");
-                    //Instantiate(rounds[currentRound].waves[currentWave].enemies[currentEnemy]);
+                //Debug.Log("Spawning enemy.");
+                //Instantiate(rounds[currentRound].waves[currentWave].enemies[currentEnemy]);
 
-                    Enemy enemy = Instantiate(enemy_prefab).GetComponent<Enemy>();
-                    enemy.health = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
-                    enemy.damage = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
-                    enemy.strength = enemy.health + enemy.damage * 2;
-                    float maxStrength = enemy.maxHealth + enemy.maxDamage * 2;
-                    enemy.GetComponent<SpriteRenderer>().color = StrengthToColor(enemy.strength, maxStrength);
-                    float scale = StrengthToScale(enemy.strength, maxStrength);
-                    enemy.transform.localScale = new Vector3(scale, scale, 1);
+                Enemy enemy = Instantiate(enemy_prefab).GetComponent<Enemy>();
+                enemy.health = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
+                enemy.damage = UnityEngine.Random.Range(enemy.minHealth, enemy.maxHealth);
+                enemy.strength = enemy.health + enemy.damage * 2;
+                float maxStrength = enemy.maxHealth + enemy.maxDamage * 2;
+                enemy.GetComponent<SpriteRenderer>().color = StrengthToColor(enemy.strength, maxStrength);
+                float scale = StrengthToScale(enemy.strength, maxStrength);
+                enemy.transform.localScale = new Vector3(scale, scale, 1);
 
-                    currentEnemy += 1;
-                    yield return new WaitForSeconds(rounds[currentRound].waves[currentWave].timeBetweenEnemies);
-                }
-                //Debug.Log("Wave complete.");
-
-                currentWave += 1;
-
-                //ugly code pls help me jowsey (from ava :p)
-                if (currentWave < rounds[currentRound].timeBetweenWaves.Count)
-                {
-                    yield return new WaitForSeconds(rounds[currentRound].timeBetweenWaves[currentWave]);
-                }
-                else
-                {
-                    yield return null;
-                }
+                currentEnemy += 1;
+                yield return new WaitForSeconds(round.waves[currentWave].timeBetweenEnemies);
             }
-            //Debug.Log("Round complete.");
+            //Debug.Log("Wave complete.");
 
-            currentRound += 1;
-
-            //Only go to next round if all enemies are dead
-            yield return new WaitUntil(() => FindObjectOfType<Enemy>() == null);
+            currentWave += 1;
 
             //ugly code pls help me jowsey (from ava :p)
-            if (currentRound < rounds.Count)
+            if (currentWave < round.timeBetweenWaves.Count)
             {
-                //Check if camera has to advance to next scene, if so, add the time it takes for the camera to move to the delay between rounds
-                if (currentRound % roundsPerScene == 0 && currentRound > 0)
-                {
-                    yield return new WaitForSeconds(timeBetweenRounds + cameraMovement.advancementTimeForNextScene);
-                    SceneManager.LoadScene("TransitionScene");
-                }
-                else
-                {
-                    yield return new WaitForSeconds(timeBetweenRounds);
-                }
+                yield return new WaitForSeconds(round.timeBetweenWaves[currentWave]);
             }
             else
             {
                 yield return null;
             }
         }
-        //Debug.Log("Game complete.");
+        //Debug.Log("Round complete.");
+
+        //Only go to next level if all enemies are dead
+        yield return new WaitUntil(() => FindObjectOfType<Enemy>() == null);
+
+        yield return new WaitForSeconds(timeBetweenRounds);
+        fadeOverTime.UnFade();
+        yield return new WaitForSeconds(fadeOverTime.delay);
+        SceneManager.LoadScene("TransitionScene");
     }
 }

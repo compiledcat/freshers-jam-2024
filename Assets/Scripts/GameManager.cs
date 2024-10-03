@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -64,8 +66,16 @@ public class GameManager : MonoBehaviour
         }
         else if (health <= 0)
         {
-            health = 0;
-            queenFrog.sprite = deadFrogSprite;
+            StartCoroutine(LoseGame());
         }
+    }
+
+    public IEnumerator LoseGame()
+    {
+        health = 0;
+        queenFrog.sprite = deadFrogSprite;
+        RoundManager.Instance.fadeOverTime.UnFade();
+        yield return new WaitForSeconds(RoundManager.Instance.fadeOverTime.time);
+        SceneManager.LoadScene("LoseScene");
     }
 }
