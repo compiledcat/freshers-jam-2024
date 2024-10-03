@@ -64,10 +64,22 @@ public class RoundManager : MonoBehaviour
 
         for (int k = 0; k < numWaves; k++)
         {
-            round.waves.Add(new WaveData(UnityEngine.Random.Range(5 + 2 * k, 10 + 3 * k), UnityEngine.Random.Range(0.25f, 2.0f)));
+            round.waves.Add(new WaveData(UnityEngine.Random.Range(5 + 2 * k, 10 + 3 * k),
+                UnityEngine.Random.Range(0.25f, 2.0f)));
         }
 
         StartCoroutine(PlayGame());
+    }
+
+    private void Update()
+    {
+#if UNITY_EDITOR
+        // next level
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.S))
+        {
+            SceneManager.LoadScene("TransitionScene");
+        }
+#endif
     }
 
 
@@ -85,7 +97,6 @@ public class RoundManager : MonoBehaviour
         // Debug.Log("");
         return Mathf.Lerp(0.5f, 2.0f, strength / maxStrength);
     }
-
 
     //Plays all rounds in game
     IEnumerator PlayGame()
