@@ -5,6 +5,20 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     [SerializeField] Button[] buttons;
+    [SerializeField] Button quitBtn;
+
+
+#if UNITY_WEBGL
+    private void Awake()
+    {
+        buttons[0].gameObject.SetActive(true);
+    }
+#endif
+
+    public void Quit()
+    {
+       Application.Quit();
+    }
 
     public void ShowNext(int index)
     {
