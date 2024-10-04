@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5394657167423027787}
   - component: {fileID: 8679670309418778288}
   - component: {fileID: 9183918183661873322}
+  - component: {fileID: 2995368494204597087}
   m_Layer: 5
   m_Name: VSScreen
   m_TagString: Untagged
@@ -37,7 +38,7 @@ RectTransform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -91,8 +92,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe9e270c535d9146a981790f2c7b16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 15
+  delay: 10
   time: 2
+--- !u!114 &2995368494204597087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558017851463078310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 4
+  m_AspectRatio: 1.7777778
 --- !u!1 &3667585473578985429
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +120,7 @@ GameObject:
   - component: {fileID: 6054574890717630162}
   - component: {fileID: 8879936440847660969}
   - component: {fileID: 5005821435435207089}
+  - component: {fileID: 3438647056051853905}
   m_Layer: 5
   m_Name: Top
   m_TagString: Untagged
@@ -181,9 +197,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670a110d12b7c704e84d893360766f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 5
-  delay: 3
+  time: 4
+  delay: 2.5
   inverse: 0
+--- !u!114 &3438647056051853905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3667585473578985429}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 1.7777778
 --- !u!1 &4770179496313644200
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,6 +226,7 @@ GameObject:
   - component: {fileID: 7367741718596273989}
   - component: {fileID: 960673823730810761}
   - component: {fileID: 2706467122735173017}
+  - component: {fileID: 6894948730106131872}
   m_Layer: 5
   m_Name: Mid
   m_TagString: Untagged
@@ -272,9 +303,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670a110d12b7c704e84d893360766f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 5
-  delay: 3
+  time: 4
+  delay: 2.5
   inverse: 0
+--- !u!114 &6894948730106131872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4770179496313644200}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 1.7777778
 --- !u!1 &8161057881634025305
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +332,7 @@ GameObject:
   - component: {fileID: 7047172740266829122}
   - component: {fileID: 1978575239996762453}
   - component: {fileID: 2348694286411419110}
+  - component: {fileID: 777821339855027254}
   m_Layer: 5
   m_Name: Bottom
   m_TagString: Untagged
@@ -363,6 +409,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670a110d12b7c704e84d893360766f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 5
-  delay: 3
+  time: 4
+  delay: 2.5
   inverse: 1
+--- !u!114 &777821339855027254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8161057881634025305}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 1.7777778

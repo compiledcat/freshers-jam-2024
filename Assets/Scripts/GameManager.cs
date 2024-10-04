@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite idleFrogSprite;
     [SerializeField] private Sprite hurtFrogSprite;
     [SerializeField] private Sprite deadFrogSprite;
+    
+    
 
     public int Money;
     
